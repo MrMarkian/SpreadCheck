@@ -1,0 +1,7 @@
+﻿
+Preivew data window
+bool rules
+finish off date / time calendar
+higher / lower
+pivot tables
+
