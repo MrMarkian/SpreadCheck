@@ -163,38 +163,38 @@
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.openToolStripMenuItem.Text = "Open";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(144, 6);
 			// 
 			// loadRuleSetsToolStripMenuItem
 			// 
 			this.loadRuleSetsToolStripMenuItem.Name = "loadRuleSetsToolStripMenuItem";
-			this.loadRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.loadRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.loadRuleSetsToolStripMenuItem.Text = "Load RuleSets";
 			this.loadRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.loadRuleSetsToolStripMenuItem_Click);
 			// 
 			// saveRuleSetsToolStripMenuItem
 			// 
 			this.saveRuleSetsToolStripMenuItem.Name = "saveRuleSetsToolStripMenuItem";
-			this.saveRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.saveRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.saveRuleSetsToolStripMenuItem.Text = "Save RuleSets";
 			this.saveRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.saveRuleSetsToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(144, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -216,7 +216,7 @@
             this.columnHeaderStartToolStripMenuItem,
             this.columnHeaderEndToolStripMenuItem});
 			this.columnToolStripMenuItem.Name = "columnToolStripMenuItem";
-			this.columnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.columnToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.columnToolStripMenuItem.Text = "Column";
 			// 
 			// columnHeaderStartToolStripMenuItem
@@ -253,7 +253,7 @@
             this.rowHeaderStartToolStripMenuItem,
             this.lastRowToolStripMenuItem});
 			this.rowToolStripMenuItem.Name = "rowToolStripMenuItem";
-			this.rowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.rowToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.rowToolStripMenuItem.Text = "Row";
 			// 
 			// rowHeaderStartToolStripMenuItem
@@ -289,19 +289,19 @@
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
 			// 
 			// enableAllRuleSetsToolStripMenuItem
 			// 
 			this.enableAllRuleSetsToolStripMenuItem.Name = "enableAllRuleSetsToolStripMenuItem";
-			this.enableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.enableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.enableAllRuleSetsToolStripMenuItem.Text = "Enable All RuleSets";
 			this.enableAllRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.enableAllRuleSetsToolStripMenuItem_Click);
 			// 
 			// disableAllRuleSetsToolStripMenuItem
 			// 
 			this.disableAllRuleSetsToolStripMenuItem.Name = "disableAllRuleSetsToolStripMenuItem";
-			this.disableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.disableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.disableAllRuleSetsToolStripMenuItem.Text = "Disable All RuleSets";
 			this.disableAllRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.disableAllRuleSetsToolStripMenuItem_Click);
 			// 
@@ -824,9 +824,9 @@
 			// button4
 			// 
 			this.button4.Enabled = false;
-			this.button4.Location = new System.Drawing.Point(607, 261);
+			this.button4.Location = new System.Drawing.Point(644, 251);
 			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(182, 64);
+			this.button4.Size = new System.Drawing.Size(92, 64);
 			this.button4.TabIndex = 29;
 			this.button4.Text = "Preview Column Data";
 			this.button4.UseVisualStyleBackColor = true;
