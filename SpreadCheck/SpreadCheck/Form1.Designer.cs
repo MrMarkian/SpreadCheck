@@ -56,6 +56,7 @@
 			this.sheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.SheetComboBox = new System.Windows.Forms.ToolStripComboBox();
 			this.reportingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.previewColumnDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.RulesGroupBox = new System.Windows.Forms.GroupBox();
 			this.MustEndWithCheckBox = new System.Windows.Forms.CheckBox();
 			this.button3 = new System.Windows.Forms.Button();
@@ -101,7 +102,6 @@
 			this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.button4 = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.RulesGroupBox.SuspendLayout();
 			this.GroupBox2.SuspendLayout();
@@ -140,7 +140,8 @@
             this.fileToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.sheetToolStripMenuItem,
-            this.reportingToolStripMenuItem});
+            this.reportingToolStripMenuItem,
+            this.previewColumnDataToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(806, 24);
@@ -216,7 +217,7 @@
             this.columnHeaderStartToolStripMenuItem,
             this.columnHeaderEndToolStripMenuItem});
 			this.columnToolStripMenuItem.Name = "columnToolStripMenuItem";
-			this.columnToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.columnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.columnToolStripMenuItem.Text = "Column";
 			// 
 			// columnHeaderStartToolStripMenuItem
@@ -253,7 +254,7 @@
             this.rowHeaderStartToolStripMenuItem,
             this.lastRowToolStripMenuItem});
 			this.rowToolStripMenuItem.Name = "rowToolStripMenuItem";
-			this.rowToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.rowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.rowToolStripMenuItem.Text = "Row";
 			// 
 			// rowHeaderStartToolStripMenuItem
@@ -261,7 +262,7 @@
 			this.rowHeaderStartToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RowHeaderStart});
 			this.rowHeaderStartToolStripMenuItem.Name = "rowHeaderStartToolStripMenuItem";
-			this.rowHeaderStartToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+			this.rowHeaderStartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.rowHeaderStartToolStripMenuItem.Text = "Row Header Start";
 			// 
 			// RowHeaderStart
@@ -277,7 +278,7 @@
 			this.lastRowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.LastRow});
 			this.lastRowToolStripMenuItem.Name = "lastRowToolStripMenuItem";
-			this.lastRowToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+			this.lastRowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.lastRowToolStripMenuItem.Text = "Last Row";
 			// 
 			// LastRow
@@ -289,19 +290,19 @@
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
 			// 
 			// enableAllRuleSetsToolStripMenuItem
 			// 
 			this.enableAllRuleSetsToolStripMenuItem.Name = "enableAllRuleSetsToolStripMenuItem";
-			this.enableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.enableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.enableAllRuleSetsToolStripMenuItem.Text = "Enable All RuleSets";
 			this.enableAllRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.enableAllRuleSetsToolStripMenuItem_Click);
 			// 
 			// disableAllRuleSetsToolStripMenuItem
 			// 
 			this.disableAllRuleSetsToolStripMenuItem.Name = "disableAllRuleSetsToolStripMenuItem";
-			this.disableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.disableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.disableAllRuleSetsToolStripMenuItem.Text = "Disable All RuleSets";
 			this.disableAllRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.disableAllRuleSetsToolStripMenuItem_Click);
 			// 
@@ -325,6 +326,14 @@
 			this.reportingToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
 			this.reportingToolStripMenuItem.Text = "Reporting";
 			this.reportingToolStripMenuItem.Click += new System.EventHandler(this.reportingToolStripMenuItem_Click);
+			// 
+			// previewColumnDataToolStripMenuItem
+			// 
+			this.previewColumnDataToolStripMenuItem.Enabled = false;
+			this.previewColumnDataToolStripMenuItem.Name = "previewColumnDataToolStripMenuItem";
+			this.previewColumnDataToolStripMenuItem.Size = new System.Drawing.Size(133, 20);
+			this.previewColumnDataToolStripMenuItem.Text = "Preview Column Data";
+			this.previewColumnDataToolStripMenuItem.Click += new System.EventHandler(this.previewColumnDataToolStripMenuItem_Click);
 			// 
 			// RulesGroupBox
 			// 
@@ -821,22 +830,11 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Double - RuleSet";
 			// 
-			// button4
-			// 
-			this.button4.Enabled = false;
-			this.button4.Location = new System.Drawing.Point(644, 251);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(92, 64);
-			this.button4.TabIndex = 29;
-			this.button4.Text = "Preview Column Data";
-			this.button4.UseVisualStyleBackColor = true;
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(806, 604);
-			this.Controls.Add(this.button4);
 			this.Controls.Add(this.ColorCellCheckBox);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.statusStrip1);
@@ -948,7 +946,7 @@
 		private System.Windows.Forms.ToolStripMenuItem loadRuleSetsToolStripMenuItem;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.GroupBox groupBox1;
-		internal System.Windows.Forms.Button button4;
+		private System.Windows.Forms.ToolStripMenuItem previewColumnDataToolStripMenuItem;
 	}
 }
 

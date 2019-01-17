@@ -387,6 +387,7 @@
 			// HyperLinkEnabledCheckbox
 			// 
 			this.HyperLinkEnabledCheckbox.AutoSize = true;
+			this.HyperLinkEnabledCheckbox.ForeColor = System.Drawing.Color.Red;
 			this.HyperLinkEnabledCheckbox.Location = new System.Drawing.Point(35, 335);
 			this.HyperLinkEnabledCheckbox.Name = "HyperLinkEnabledCheckbox";
 			this.HyperLinkEnabledCheckbox.Size = new System.Drawing.Size(190, 17);
@@ -459,6 +460,7 @@
 			// IncludePivotCheckBox
 			// 
 			this.IncludePivotCheckBox.AutoSize = true;
+			this.IncludePivotCheckBox.ForeColor = System.Drawing.Color.Red;
 			this.IncludePivotCheckBox.Location = new System.Drawing.Point(35, 358);
 			this.IncludePivotCheckBox.Name = "IncludePivotCheckBox";
 			this.IncludePivotCheckBox.Size = new System.Drawing.Size(170, 17);

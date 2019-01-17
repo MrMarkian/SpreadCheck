@@ -109,7 +109,7 @@ namespace SpreadCheck
             colrowlabel.Text = "C:" + endcolumn.ToString() + "R:" + foundLastRow.ToString();
            
            Report = new Reporter(xlWorkBook, xlWorkSheet, endcolumn);
-           StatusLabel.Text = "  Idle...";
+           
 			this.Text = "SpreadChecker - " + openFileDialog.SafeFileName;
 
 			//Check for existing settings... 
@@ -119,7 +119,9 @@ namespace SpreadCheck
 			if (File.Exists(fullpath))
 				{ LoadSettings(fullpath); }
 
-        }
+			previewColumnDataToolStripMenuItem.Enabled = true;
+			StatusLabel.Text = "  Idle...";
+		}
 
         private void releaseObject(object obj)
         {   try
@@ -274,7 +276,7 @@ namespace SpreadCheck
 			RulesGroupBox.Enabled = false;
 			HeaderList.Enabled = false;
 			RunButton.Enabled = false;
-
+			
             var pos = new Position();
             var Check = new RuleCheck(XlWorkSheet);
             var xlFunc = new XLFunctions();
@@ -569,6 +571,7 @@ namespace SpreadCheck
 			StatusLabel.Text = "Saving RuleSets.... ";
 			try { saveFileDialog.ShowDialog(); } catch { };
 			SaveSettings(saveFileDialog.FileName);
+
 			StatusLabel.Text = "Idle.... ";
 		}
 
@@ -577,6 +580,13 @@ namespace SpreadCheck
 			try { openFileDialog.ShowDialog(); } catch { }
 			LoadSettings(openFileDialog.FileName);
 				StatusLabel.Text = "Idle.... ";
+		}
+
+		private void previewColumnDataToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PreviewData pForm = new PreviewData(xlWorkBook, xlWorkSheet, Convert.ToInt32(LastRow.Text),HeaderList.SelectedIndex);
+			
+			pForm.ShowDialog();
 		}
 	}
 }
