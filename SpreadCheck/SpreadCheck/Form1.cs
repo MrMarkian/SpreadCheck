@@ -115,7 +115,9 @@ namespace SpreadCheck
 			//Check for existing settings... 
 
 			string fullpath = Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Path.GetFileNameWithoutExtension(openFileDialog.FileName) + ".dat";
-			MessageBox.Show(fullpath);
+		
+			reportForm.RuleSetLocation.Text = fullpath;
+
 			if (File.Exists(fullpath))
 				{ LoadSettings(fullpath); }
 

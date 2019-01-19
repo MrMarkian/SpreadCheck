@@ -1,7 +1,8 @@
 ﻿
-Preivew data window
+Preivew data window - Change to normal form and update on header selection change. 
 bool rules
 finish off date / time calendar
-higher / lower
-pivot tables
+pivot tables - 
+Automatically correct detected errors
+Cell format deviation report
 

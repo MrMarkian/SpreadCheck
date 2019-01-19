@@ -53,7 +53,7 @@
 			this.MaxRowNumber.Dock = System.Windows.Forms.DockStyle.Left;
 			this.MaxRowNumber.Location = new System.Drawing.Point(87, 0);
 			this.MaxRowNumber.Name = "MaxRowNumber";
-			this.MaxRowNumber.Size = new System.Drawing.Size(120, 20);
+			this.MaxRowNumber.Size = new System.Drawing.Size(81, 20);
 			this.MaxRowNumber.TabIndex = 2;
 			this.MaxRowNumber.Value = new decimal(new int[] {
             10,
@@ -64,9 +64,9 @@
 			// RefreshBButton
 			// 
 			this.RefreshBButton.Dock = System.Windows.Forms.DockStyle.Top;
-			this.RefreshBButton.Location = new System.Drawing.Point(207, 0);
+			this.RefreshBButton.Location = new System.Drawing.Point(168, 0);
 			this.RefreshBButton.Name = "RefreshBButton";
-			this.RefreshBButton.Size = new System.Drawing.Size(200, 23);
+			this.RefreshBButton.Size = new System.Drawing.Size(239, 23);
 			this.RefreshBButton.TabIndex = 3;
 			this.RefreshBButton.Text = "Refresh";
 			this.RefreshBButton.UseVisualStyleBackColor = true;

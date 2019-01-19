@@ -72,9 +72,12 @@
 			this.IncludePivotCheckBox = new System.Windows.Forms.CheckBox();
 			this.NullReportCheckbox = new System.Windows.Forms.CheckBox();
 			this.InvalidTypesReportCheckBox = new System.Windows.Forms.CheckBox();
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.RuleSetLocation = new System.Windows.Forms.ToolStripStatusLabel();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -153,6 +156,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.groupBox2.Controls.Add(this.label14);
 			this.groupBox2.Controls.Add(this.CellUnexpectedError);
 			this.groupBox2.Controls.Add(this.label13);
@@ -488,11 +492,29 @@
 			this.InvalidTypesReportCheckBox.Text = "Report Invalid DataTypes";
 			this.InvalidTypesReportCheckBox.UseVisualStyleBackColor = true;
 			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RuleSetLocation});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 393);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(702, 22);
+			this.statusStrip1.SizingGrip = false;
+			this.statusStrip1.TabIndex = 12;
+			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// RuleSetLocation
+			// 
+			this.RuleSetLocation.Name = "RuleSetLocation";
+			this.RuleSetLocation.Size = new System.Drawing.Size(98, 17);
+			this.RuleSetLocation.Text = "RuleSet Location:";
+			// 
 			// ReportingOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(692, 393);
+			this.ClientSize = new System.Drawing.Size(702, 415);
+			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.InvalidTypesReportCheckBox);
 			this.Controls.Add(this.NullReportCheckbox);
 			this.Controls.Add(this.IncludePivotCheckBox);
@@ -503,7 +525,6 @@
 			this.Controls.Add(this.HyperLinkEnabledCheckbox);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ReportingOptions";
@@ -519,6 +540,8 @@
 			this.groupBox2.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -570,5 +593,7 @@
 		public System.Windows.Forms.CheckBox HyperLinkEnabledCheckbox;
 		public System.Windows.Forms.CheckBox NullReportCheckbox;
 		public System.Windows.Forms.CheckBox InvalidTypesReportCheckBox;
+		private System.Windows.Forms.StatusStrip statusStrip1;
+		public System.Windows.Forms.ToolStripStatusLabel RuleSetLocation;
 	}
 }

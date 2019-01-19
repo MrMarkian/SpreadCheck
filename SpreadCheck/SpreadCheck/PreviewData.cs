@@ -25,14 +25,14 @@ namespace SpreadCheck
 			ColumNumber = ColumnNo +1;
 			
 			InitializeComponent();
-			MaxRowNumber.Maximum = endPosition;
+			MaxRowNumber.Maximum = endPosition+1;
 		}
 
 		private void RefreshBButton_Click(object sender, EventArgs e)
 		{
 			//double calling the interop is probably v.slow.. 
 			PreviewList.Items.Clear();
-			for (int count =1; count < MaxRowNumber.Value; count++) {
+			for (int count =1; count < MaxRowNumber.Value +1; count++) {
 				
 				switch (xlPreviewSheet.Cells [count, ColumNumber].Value) {
 					case string s:

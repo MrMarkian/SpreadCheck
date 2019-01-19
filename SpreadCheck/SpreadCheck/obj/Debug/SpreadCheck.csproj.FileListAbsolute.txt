@@ -25,3 +25,5 @@ C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\Spread
 C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.exe
 C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.pdb
 C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.PreviewData.resources
+C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe.CodeAnalysisLog.xml
+C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe.lastcodeanalysissucceeded
