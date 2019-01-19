@@ -102,6 +102,7 @@
 			this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.menuStrip1.SuspendLayout();
 			this.RulesGroupBox.SuspendLayout();
 			this.GroupBox2.SuspendLayout();
@@ -122,7 +123,7 @@
 			this.HeaderList.Location = new System.Drawing.Point(12, 29);
 			this.HeaderList.MinimumSize = new System.Drawing.Size(240, 500);
 			this.HeaderList.Name = "HeaderList";
-			this.HeaderList.Size = new System.Drawing.Size(244, 550);
+			this.HeaderList.Size = new System.Drawing.Size(244, 537);
 			this.HeaderList.TabIndex = 0;
 			this.HeaderList.SelectedIndexChanged += new System.EventHandler(this.HeaderList_SelectedIndexChanged);
 			// 
@@ -372,10 +373,10 @@
 			// 
 			// MustEndWithCheckBox
 			// 
-			this.MustEndWithCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.MustEndWithCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MustEndWithCheckBox.AutoSize = true;
-			this.MustEndWithCheckBox.Location = new System.Drawing.Point(14, 294);
+			this.MustEndWithCheckBox.Location = new System.Drawing.Point(14, 211);
 			this.MustEndWithCheckBox.Name = "MustEndWithCheckBox";
 			this.MustEndWithCheckBox.Size = new System.Drawing.Size(96, 17);
 			this.MustEndWithCheckBox.TabIndex = 22;
@@ -387,7 +388,7 @@
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(149, 174);
+			this.button3.Location = new System.Drawing.Point(149, 151);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(136, 22);
 			this.button3.TabIndex = 22;
@@ -397,9 +398,9 @@
 			// 
 			// EndWithTextBox
 			// 
-			this.EndWithTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.EndWithTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.EndWithTextBox.Location = new System.Drawing.Point(149, 292);
+			this.EndWithTextBox.Location = new System.Drawing.Point(149, 209);
 			this.EndWithTextBox.Name = "EndWithTextBox";
 			this.EndWithTextBox.Size = new System.Drawing.Size(165, 20);
 			this.EndWithTextBox.TabIndex = 21;
@@ -407,23 +408,23 @@
 			// 
 			// GroupBox2
 			// 
+			this.GroupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.GroupBox2.Controls.Add(this.ItemCheckTextBox);
 			this.GroupBox2.Controls.Add(this.Button2);
 			this.GroupBox2.Controls.Add(this.AllowValuesCheckbox);
 			this.GroupBox2.Controls.Add(this.Button1);
 			this.GroupBox2.Controls.Add(this.AllowedItemsList);
-			this.GroupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.GroupBox2.Location = new System.Drawing.Point(3, 350);
+			this.GroupBox2.Location = new System.Drawing.Point(3, 269);
 			this.GroupBox2.Name = "GroupBox2";
-			this.GroupBox2.Size = new System.Drawing.Size(314, 152);
+			this.GroupBox2.Size = new System.Drawing.Size(314, 236);
 			this.GroupBox2.TabIndex = 20;
 			this.GroupBox2.TabStop = false;
 			// 
 			// ItemCheckTextBox
 			// 
-			this.ItemCheckTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.ItemCheckTextBox.Location = new System.Drawing.Point(11, 48);
+			this.ItemCheckTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.ItemCheckTextBox.Location = new System.Drawing.Point(12, 137);
 			this.ItemCheckTextBox.Name = "ItemCheckTextBox";
 			this.ItemCheckTextBox.Size = new System.Drawing.Size(111, 20);
 			this.ItemCheckTextBox.TabIndex = 7;
@@ -431,11 +432,10 @@
 			// 
 			// Button2
 			// 
-			this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.Button2.Location = new System.Drawing.Point(29, 112);
+			this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.Button2.Location = new System.Drawing.Point(11, 199);
 			this.Button2.Name = "Button2";
-			this.Button2.Size = new System.Drawing.Size(111, 28);
+			this.Button2.Size = new System.Drawing.Size(111, 29);
 			this.Button2.TabIndex = 6;
 			this.Button2.Text = "Remove Item";
 			this.Button2.UseVisualStyleBackColor = true;
@@ -443,10 +443,8 @@
 			// 
 			// AllowValuesCheckbox
 			// 
-			this.AllowValuesCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
 			this.AllowValuesCheckbox.AutoSize = true;
-			this.AllowValuesCheckbox.Location = new System.Drawing.Point(11, 25);
+			this.AllowValuesCheckbox.Location = new System.Drawing.Point(11, 13);
 			this.AllowValuesCheckbox.Name = "AllowValuesCheckbox";
 			this.AllowValuesCheckbox.Size = new System.Drawing.Size(112, 17);
 			this.AllowValuesCheckbox.TabIndex = 19;
@@ -456,11 +454,10 @@
 			// 
 			// Button1
 			// 
-			this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.Button1.Location = new System.Drawing.Point(29, 83);
+			this.Button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.Button1.Location = new System.Drawing.Point(11, 164);
 			this.Button1.Name = "Button1";
-			this.Button1.Size = new System.Drawing.Size(111, 23);
+			this.Button1.Size = new System.Drawing.Size(111, 24);
 			this.Button1.TabIndex = 5;
 			this.Button1.Text = "Add Item";
 			this.Button1.UseVisualStyleBackColor = true;
@@ -468,18 +465,19 @@
 			// 
 			// AllowedItemsList
 			// 
-			this.AllowedItemsList.Dock = System.Windows.Forms.DockStyle.Right;
+			this.AllowedItemsList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.AllowedItemsList.FormattingEnabled = true;
-			this.AllowedItemsList.Location = new System.Drawing.Point(165, 16);
+			this.AllowedItemsList.Location = new System.Drawing.Point(129, 13);
 			this.AllowedItemsList.Name = "AllowedItemsList";
-			this.AllowedItemsList.Size = new System.Drawing.Size(146, 133);
+			this.AllowedItemsList.Size = new System.Drawing.Size(179, 217);
 			this.AllowedItemsList.TabIndex = 3;
 			// 
 			// CheckDateTimeCheckBox
 			// 
 			this.CheckDateTimeCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
 			this.CheckDateTimeCheckBox.AutoSize = true;
-			this.CheckDateTimeCheckBox.Location = new System.Drawing.Point(14, 179);
+			this.CheckDateTimeCheckBox.Location = new System.Drawing.Point(14, 156);
 			this.CheckDateTimeCheckBox.Name = "CheckDateTimeCheckBox";
 			this.CheckDateTimeCheckBox.Size = new System.Drawing.Size(117, 17);
 			this.CheckDateTimeCheckBox.TabIndex = 21;
@@ -488,10 +486,10 @@
 			// 
 			// MustBeginWithCheckbox
 			// 
-			this.MustBeginWithCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.MustBeginWithCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MustBeginWithCheckbox.AutoSize = true;
-			this.MustBeginWithCheckbox.Location = new System.Drawing.Point(14, 271);
+			this.MustBeginWithCheckbox.Location = new System.Drawing.Point(14, 188);
 			this.MustBeginWithCheckbox.Name = "MustBeginWithCheckbox";
 			this.MustBeginWithCheckbox.Size = new System.Drawing.Size(104, 17);
 			this.MustBeginWithCheckbox.TabIndex = 18;
@@ -501,11 +499,11 @@
 			// 
 			// LengthEnabledCheckbox
 			// 
-			this.LengthEnabledCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.LengthEnabledCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.LengthEnabledCheckbox.AutoSize = true;
 			this.LengthEnabledCheckbox.ForeColor = System.Drawing.SystemColors.WindowText;
-			this.LengthEnabledCheckbox.Location = new System.Drawing.Point(14, 317);
+			this.LengthEnabledCheckbox.Location = new System.Drawing.Point(14, 234);
 			this.LengthEnabledCheckbox.Name = "LengthEnabledCheckbox";
 			this.LengthEnabledCheckbox.Size = new System.Drawing.Size(129, 17);
 			this.LengthEnabledCheckbox.TabIndex = 17;
@@ -515,10 +513,10 @@
 			// 
 			// LengthNumericUpDown
 			// 
-			this.LengthNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.LengthNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.LengthNumericUpDown.Enabled = false;
-			this.LengthNumericUpDown.Location = new System.Drawing.Point(149, 317);
+			this.LengthNumericUpDown.Location = new System.Drawing.Point(149, 234);
 			this.LengthNumericUpDown.Name = "LengthNumericUpDown";
 			this.LengthNumericUpDown.Size = new System.Drawing.Size(165, 20);
 			this.LengthNumericUpDown.TabIndex = 16;
@@ -527,9 +525,9 @@
 			// 
 			// BeginWithTextBox
 			// 
-			this.BeginWithTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.BeginWithTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.BeginWithTextBox.Location = new System.Drawing.Point(149, 269);
+			this.BeginWithTextBox.Location = new System.Drawing.Point(149, 186);
 			this.BeginWithTextBox.Name = "BeginWithTextBox";
 			this.BeginWithTextBox.Size = new System.Drawing.Size(165, 20);
 			this.BeginWithTextBox.TabIndex = 15;
@@ -675,8 +673,8 @@
 			// 
 			// Functions
 			// 
-			this.Functions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.Functions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.Functions.Controls.Add(this.checkBox1);
 			this.Functions.Controls.Add(this.NumberFormatCombo);
 			this.Functions.Controls.Add(this.TextAlignmentList);
 			this.Functions.Controls.Add(this.TextRealignCheckbox);
@@ -684,33 +682,31 @@
 			this.Functions.Controls.Add(this.ReverseCheckBox);
 			this.Functions.Controls.Add(this.ChangeCaseCombo);
 			this.Functions.Controls.Add(this.TrimCheckBox);
-			this.Functions.Location = new System.Drawing.Point(602, 276);
-			this.Functions.MaximumSize = new System.Drawing.Size(180, 400);
+			this.Functions.Location = new System.Drawing.Point(602, 337);
+			this.Functions.MaximumSize = new System.Drawing.Size(180, 300);
 			this.Functions.MinimumSize = new System.Drawing.Size(150, 220);
 			this.Functions.Name = "Functions";
-			this.Functions.Size = new System.Drawing.Size(180, 284);
+			this.Functions.Size = new System.Drawing.Size(178, 229);
 			this.Functions.TabIndex = 23;
 			this.Functions.TabStop = false;
 			this.Functions.Text = "Functions";
 			// 
 			// NumberFormatCombo
 			// 
-			this.NumberFormatCombo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.NumberFormatCombo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.NumberFormatCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.NumberFormatCombo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
 			this.NumberFormatCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.NumberFormatCombo.FormattingEnabled = true;
-			this.NumberFormatCombo.Location = new System.Drawing.Point(6, 256);
+			this.NumberFormatCombo.Location = new System.Drawing.Point(6, 201);
 			this.NumberFormatCombo.Name = "NumberFormatCombo";
-			this.NumberFormatCombo.Size = new System.Drawing.Size(160, 21);
+			this.NumberFormatCombo.Size = new System.Drawing.Size(167, 21);
 			this.NumberFormatCombo.TabIndex = 9;
 			this.NumberFormatCombo.SelectedIndexChanged += new System.EventHandler(this.NumberFormatCombo_SelectedIndexChanged);
 			// 
 			// TextAlignmentList
 			// 
-			this.TextAlignmentList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TextAlignmentList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.TextAlignmentList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.TextAlignmentList.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
 			this.TextAlignmentList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -720,18 +716,17 @@
             "Left",
             "Right",
             "Center"});
-			this.TextAlignmentList.Location = new System.Drawing.Point(6, 216);
+			this.TextAlignmentList.Location = new System.Drawing.Point(6, 149);
 			this.TextAlignmentList.Name = "TextAlignmentList";
-			this.TextAlignmentList.Size = new System.Drawing.Size(160, 21);
+			this.TextAlignmentList.Size = new System.Drawing.Size(167, 21);
 			this.TextAlignmentList.TabIndex = 8;
 			this.TextAlignmentList.SelectedIndexChanged += new System.EventHandler(this.CheckedChanged);
 			// 
 			// TextRealignCheckbox
 			// 
-			this.TextRealignCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TextRealignCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.TextRealignCheckbox.AutoSize = true;
-			this.TextRealignCheckbox.Location = new System.Drawing.Point(6, 193);
+			this.TextRealignCheckbox.Location = new System.Drawing.Point(6, 126);
 			this.TextRealignCheckbox.Name = "TextRealignCheckbox";
 			this.TextRealignCheckbox.Size = new System.Drawing.Size(73, 17);
 			this.TextRealignCheckbox.TabIndex = 7;
@@ -741,9 +736,9 @@
 			// 
 			// ChangeCaseCheckBox
 			// 
-			this.ChangeCaseCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+			this.ChangeCaseCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.ChangeCaseCheckBox.AutoSize = true;
-			this.ChangeCaseCheckBox.Location = new System.Drawing.Point(6, 88);
+			this.ChangeCaseCheckBox.Location = new System.Drawing.Point(6, 76);
 			this.ChangeCaseCheckBox.Name = "ChangeCaseCheckBox";
 			this.ChangeCaseCheckBox.Size = new System.Drawing.Size(90, 17);
 			this.ChangeCaseCheckBox.TabIndex = 6;
@@ -757,7 +752,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ReverseCheckBox.AutoSize = true;
-			this.ReverseCheckBox.Location = new System.Drawing.Point(6, 54);
+			this.ReverseCheckBox.Location = new System.Drawing.Point(6, 42);
 			this.ReverseCheckBox.Name = "ReverseCheckBox";
 			this.ReverseCheckBox.Size = new System.Drawing.Size(92, 17);
 			this.ReverseCheckBox.TabIndex = 5;
@@ -767,7 +762,7 @@
 			// 
 			// ChangeCaseCombo
 			// 
-			this.ChangeCaseCombo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+			this.ChangeCaseCombo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.ChangeCaseCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ChangeCaseCombo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
 			this.ChangeCaseCombo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -778,9 +773,9 @@
             "To Lower Case",
             "To Upper Invariant",
             "To Lower Invariant"});
-			this.ChangeCaseCombo.Location = new System.Drawing.Point(6, 111);
+			this.ChangeCaseCombo.Location = new System.Drawing.Point(6, 99);
 			this.ChangeCaseCombo.Name = "ChangeCaseCombo";
-			this.ChangeCaseCombo.Size = new System.Drawing.Size(160, 21);
+			this.ChangeCaseCombo.Size = new System.Drawing.Size(168, 21);
 			this.ChangeCaseCombo.TabIndex = 3;
 			this.ChangeCaseCombo.SelectedIndexChanged += new System.EventHandler(this.CheckedChanged);
 			// 
@@ -830,8 +825,6 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.AllowItemReorder = true;
-			this.statusStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.colrowlabel,
             this.toolStripStatusLabel1,
@@ -840,9 +833,9 @@
             this.NumberFormatLabel,
             this.StatLabel,
             this.StatusLabel});
-			this.statusStrip1.Location = new System.Drawing.Point(476, 569);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 569);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(318, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(794, 22);
 			this.statusStrip1.SizingGrip = false;
 			this.statusStrip1.TabIndex = 24;
 			this.statusStrip1.Text = "statusStrip1";
@@ -908,6 +901,17 @@
 			this.groupBox1.TabIndex = 28;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Double - RuleSet";
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Location = new System.Drawing.Point(6, 178);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(135, 17);
+			this.checkBox1.TabIndex = 10;
+			this.checkBox1.Text = "Change Cell Formatting";
+			this.checkBox1.UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
@@ -1025,6 +1029,7 @@
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ToolStripMenuItem previewColumnDataToolStripMenuItem;
+		private System.Windows.Forms.CheckBox checkBox1;
 	}
 }
 
