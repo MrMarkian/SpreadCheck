@@ -83,14 +83,18 @@
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.IncludeFullRow);
+			this.groupBox1.Controls.Add(this.IncludePivotCheckBox);
+			this.groupBox1.Controls.Add(this.InvalidTypesReportCheckBox);
 			this.groupBox1.Controls.Add(this.IncludeEnabledColumns);
+			this.groupBox1.Controls.Add(this.NullReportCheckbox);
 			this.groupBox1.Controls.Add(this.IncludeOriginalData);
+			this.groupBox1.Controls.Add(this.HyperLinkEnabledCheckbox);
 			this.groupBox1.Location = new System.Drawing.Point(12, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(227, 95);
+			this.groupBox1.Size = new System.Drawing.Size(227, 194);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Included Columns";
+			this.groupBox1.Text = "Included Data / Columns";
 			// 
 			// IncludeFullRow
 			// 
@@ -128,35 +132,38 @@
 			// 
 			// CellEmptyErrorText
 			// 
-			this.CellEmptyErrorText.Location = new System.Drawing.Point(9, 41);
+			this.CellEmptyErrorText.Location = new System.Drawing.Point(14, 40);
 			this.CellEmptyErrorText.Name = "CellEmptyErrorText";
 			this.CellEmptyErrorText.Size = new System.Drawing.Size(200, 20);
 			this.CellEmptyErrorText.TabIndex = 1;
 			// 
 			// CellContainsSpacesError
 			// 
-			this.CellContainsSpacesError.Location = new System.Drawing.Point(9, 80);
+			this.CellContainsSpacesError.Location = new System.Drawing.Point(14, 79);
 			this.CellContainsSpacesError.Name = "CellContainsSpacesError";
 			this.CellContainsSpacesError.Size = new System.Drawing.Size(200, 20);
 			this.CellContainsSpacesError.TabIndex = 2;
 			// 
 			// CellContainsNonAlphaError
 			// 
-			this.CellContainsNonAlphaError.Location = new System.Drawing.Point(9, 119);
+			this.CellContainsNonAlphaError.Location = new System.Drawing.Point(14, 132);
 			this.CellContainsNonAlphaError.Name = "CellContainsNonAlphaError";
 			this.CellContainsNonAlphaError.Size = new System.Drawing.Size(200, 20);
 			this.CellContainsNonAlphaError.TabIndex = 3;
 			// 
 			// CellContainsNumbersError
 			// 
-			this.CellContainsNumbersError.Location = new System.Drawing.Point(9, 158);
+			this.CellContainsNumbersError.Location = new System.Drawing.Point(11, 178);
 			this.CellContainsNumbersError.Name = "CellContainsNumbersError";
 			this.CellContainsNumbersError.Size = new System.Drawing.Size(200, 20);
 			this.CellContainsNumbersError.TabIndex = 4;
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupBox2.AutoSize = true;
 			this.groupBox2.Controls.Add(this.label14);
 			this.groupBox2.Controls.Add(this.CellUnexpectedError);
 			this.groupBox2.Controls.Add(this.label13);
@@ -187,7 +194,7 @@
 			this.groupBox2.Controls.Add(this.CellContainsNonAlphaError);
 			this.groupBox2.Location = new System.Drawing.Point(245, 12);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(443, 306);
+			this.groupBox2.Size = new System.Drawing.Size(428, 364);
 			this.groupBox2.TabIndex = 5;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Error Strings";
@@ -195,7 +202,7 @@
 			// label14
 			// 
 			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(230, 259);
+			this.label14.Location = new System.Drawing.Point(219, 306);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(143, 13);
 			this.label14.TabIndex = 28;
@@ -203,7 +210,7 @@
 			// 
 			// CellUnexpectedError
 			// 
-			this.CellUnexpectedError.Location = new System.Drawing.Point(230, 275);
+			this.CellUnexpectedError.Location = new System.Drawing.Point(219, 322);
 			this.CellUnexpectedError.Name = "CellUnexpectedError";
 			this.CellUnexpectedError.Size = new System.Drawing.Size(200, 20);
 			this.CellUnexpectedError.TabIndex = 27;
@@ -211,7 +218,7 @@
 			// label13
 			// 
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(9, 259);
+			this.label13.Location = new System.Drawing.Point(11, 306);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(70, 13);
 			this.label13.TabIndex = 26;
@@ -219,7 +226,7 @@
 			// 
 			// CellNullError
 			// 
-			this.CellNullError.Location = new System.Drawing.Point(9, 275);
+			this.CellNullError.Location = new System.Drawing.Point(11, 322);
 			this.CellNullError.Name = "CellNullError";
 			this.CellNullError.Size = new System.Drawing.Size(200, 20);
 			this.CellNullError.TabIndex = 25;
@@ -227,7 +234,7 @@
 			// label12
 			// 
 			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(227, 220);
+			this.label12.Location = new System.Drawing.Point(216, 259);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(89, 13);
 			this.label12.TabIndex = 24;
@@ -235,7 +242,7 @@
 			// 
 			// CellStringEqualError
 			// 
-			this.CellStringEqualError.Location = new System.Drawing.Point(230, 236);
+			this.CellStringEqualError.Location = new System.Drawing.Point(219, 275);
 			this.CellStringEqualError.Name = "CellStringEqualError";
 			this.CellStringEqualError.Size = new System.Drawing.Size(200, 20);
 			this.CellStringEqualError.TabIndex = 23;
@@ -243,7 +250,7 @@
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(230, 181);
+			this.label11.Location = new System.Drawing.Point(219, 216);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(91, 13);
 			this.label11.TabIndex = 22;
@@ -251,7 +258,7 @@
 			// 
 			// CellLessThanError
 			// 
-			this.CellLessThanError.Location = new System.Drawing.Point(230, 197);
+			this.CellLessThanError.Location = new System.Drawing.Point(219, 232);
 			this.CellLessThanError.Name = "CellLessThanError";
 			this.CellLessThanError.Size = new System.Drawing.Size(200, 20);
 			this.CellLessThanError.TabIndex = 21;
@@ -259,7 +266,7 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(230, 142);
+			this.label10.Location = new System.Drawing.Point(219, 162);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(93, 13);
 			this.label10.TabIndex = 20;
@@ -267,7 +274,7 @@
 			// 
 			// CellMoreThanError
 			// 
-			this.CellMoreThanError.Location = new System.Drawing.Point(230, 158);
+			this.CellMoreThanError.Location = new System.Drawing.Point(219, 178);
 			this.CellMoreThanError.Name = "CellMoreThanError";
 			this.CellMoreThanError.Size = new System.Drawing.Size(200, 20);
 			this.CellMoreThanError.TabIndex = 19;
@@ -275,7 +282,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(230, 103);
+			this.label9.Location = new System.Drawing.Point(222, 116);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(97, 13);
 			this.label9.TabIndex = 18;
@@ -283,7 +290,7 @@
 			// 
 			// CellAllowedItemsError
 			// 
-			this.CellAllowedItemsError.Location = new System.Drawing.Point(230, 119);
+			this.CellAllowedItemsError.Location = new System.Drawing.Point(222, 132);
 			this.CellAllowedItemsError.Name = "CellAllowedItemsError";
 			this.CellAllowedItemsError.Size = new System.Drawing.Size(200, 20);
 			this.CellAllowedItemsError.TabIndex = 17;
@@ -291,7 +298,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(230, 64);
+			this.label8.Location = new System.Drawing.Point(222, 63);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(132, 13);
 			this.label8.TabIndex = 16;
@@ -299,7 +306,7 @@
 			// 
 			// CellLengthError
 			// 
-			this.CellLengthError.Location = new System.Drawing.Point(230, 80);
+			this.CellLengthError.Location = new System.Drawing.Point(222, 79);
 			this.CellLengthError.Name = "CellLengthError";
 			this.CellLengthError.Size = new System.Drawing.Size(200, 20);
 			this.CellLengthError.TabIndex = 15;
@@ -307,7 +314,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(230, 25);
+			this.label7.Location = new System.Drawing.Point(222, 24);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(102, 13);
 			this.label7.TabIndex = 14;
@@ -315,7 +322,7 @@
 			// 
 			// CellMustEndWithError
 			// 
-			this.CellMustEndWithError.Location = new System.Drawing.Point(230, 41);
+			this.CellMustEndWithError.Location = new System.Drawing.Point(222, 40);
 			this.CellMustEndWithError.Name = "CellMustEndWithError";
 			this.CellMustEndWithError.Size = new System.Drawing.Size(200, 20);
 			this.CellMustEndWithError.TabIndex = 13;
@@ -323,7 +330,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(9, 220);
+			this.label6.Location = new System.Drawing.Point(11, 259);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(110, 13);
 			this.label6.TabIndex = 12;
@@ -331,7 +338,7 @@
 			// 
 			// CellMustBeginWithError
 			// 
-			this.CellMustBeginWithError.Location = new System.Drawing.Point(9, 236);
+			this.CellMustBeginWithError.Location = new System.Drawing.Point(11, 275);
 			this.CellMustBeginWithError.Name = "CellMustBeginWithError";
 			this.CellMustBeginWithError.Size = new System.Drawing.Size(200, 20);
 			this.CellMustBeginWithError.TabIndex = 11;
@@ -339,7 +346,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(9, 181);
+			this.label5.Location = new System.Drawing.Point(8, 216);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(124, 13);
 			this.label5.TabIndex = 10;
@@ -347,7 +354,7 @@
 			// 
 			// CellContainsLettersError
 			// 
-			this.CellContainsLettersError.Location = new System.Drawing.Point(9, 197);
+			this.CellContainsLettersError.Location = new System.Drawing.Point(11, 232);
 			this.CellContainsLettersError.Name = "CellContainsLettersError";
 			this.CellContainsLettersError.Size = new System.Drawing.Size(200, 20);
 			this.CellContainsLettersError.TabIndex = 9;
@@ -355,7 +362,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(9, 142);
+			this.label4.Location = new System.Drawing.Point(11, 162);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(134, 13);
 			this.label4.TabIndex = 8;
@@ -364,7 +371,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(9, 103);
+			this.label3.Location = new System.Drawing.Point(14, 116);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(181, 13);
 			this.label3.TabIndex = 7;
@@ -373,7 +380,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(9, 64);
+			this.label2.Location = new System.Drawing.Point(14, 63);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(128, 13);
 			this.label2.TabIndex = 6;
@@ -382,7 +389,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(9, 25);
+			this.label1.Location = new System.Drawing.Point(14, 24);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(77, 13);
 			this.label1.TabIndex = 5;
@@ -392,7 +399,7 @@
 			// 
 			this.HyperLinkEnabledCheckbox.AutoSize = true;
 			this.HyperLinkEnabledCheckbox.ForeColor = System.Drawing.Color.Red;
-			this.HyperLinkEnabledCheckbox.Location = new System.Drawing.Point(35, 335);
+			this.HyperLinkEnabledCheckbox.Location = new System.Drawing.Point(7, 135);
 			this.HyperLinkEnabledCheckbox.Name = "HyperLinkEnabledCheckbox";
 			this.HyperLinkEnabledCheckbox.Size = new System.Drawing.Size(190, 17);
 			this.HyperLinkEnabledCheckbox.TabIndex = 3;
@@ -403,7 +410,7 @@
 			// 
 			this.groupBox3.Controls.Add(this.UseColumnNumberRadio);
 			this.groupBox3.Controls.Add(this.UseHeaderNamesRadio);
-			this.groupBox3.Location = new System.Drawing.Point(12, 113);
+			this.groupBox3.Location = new System.Drawing.Point(12, 217);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(227, 67);
 			this.groupBox3.TabIndex = 3;
@@ -435,8 +442,9 @@
 			// 
 			// ErrorColorCombo
 			// 
+			this.ErrorColorCombo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.ErrorColorCombo.FormattingEnabled = true;
-			this.ErrorColorCombo.Location = new System.Drawing.Point(19, 287);
+			this.ErrorColorCombo.Location = new System.Drawing.Point(12, 310);
 			this.ErrorColorCombo.Name = "ErrorColorCombo";
 			this.ErrorColorCombo.Size = new System.Drawing.Size(209, 21);
 			this.ErrorColorCombo.TabIndex = 6;
@@ -444,8 +452,9 @@
 			// 
 			// EnumLabel
 			// 
+			this.EnumLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.EnumLabel.AutoSize = true;
-			this.EnumLabel.Location = new System.Drawing.Point(19, 271);
+			this.EnumLabel.Location = new System.Drawing.Point(12, 294);
 			this.EnumLabel.Name = "EnumLabel";
 			this.EnumLabel.Size = new System.Drawing.Size(122, 13);
 			this.EnumLabel.TabIndex = 7;
@@ -453,7 +462,8 @@
 			// 
 			// SaveButton
 			// 
-			this.SaveButton.Location = new System.Drawing.Point(466, 335);
+			this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.SaveButton.Location = new System.Drawing.Point(12, 337);
 			this.SaveButton.Name = "SaveButton";
 			this.SaveButton.Size = new System.Drawing.Size(209, 33);
 			this.SaveButton.TabIndex = 8;
@@ -465,7 +475,7 @@
 			// 
 			this.IncludePivotCheckBox.AutoSize = true;
 			this.IncludePivotCheckBox.ForeColor = System.Drawing.Color.Red;
-			this.IncludePivotCheckBox.Location = new System.Drawing.Point(35, 358);
+			this.IncludePivotCheckBox.Location = new System.Drawing.Point(7, 158);
 			this.IncludePivotCheckBox.Name = "IncludePivotCheckBox";
 			this.IncludePivotCheckBox.Size = new System.Drawing.Size(170, 17);
 			this.IncludePivotCheckBox.TabIndex = 9;
@@ -475,7 +485,7 @@
 			// NullReportCheckbox
 			// 
 			this.NullReportCheckbox.AutoSize = true;
-			this.NullReportCheckbox.Location = new System.Drawing.Point(290, 335);
+			this.NullReportCheckbox.Location = new System.Drawing.Point(7, 89);
 			this.NullReportCheckbox.Name = "NullReportCheckbox";
 			this.NullReportCheckbox.Size = new System.Drawing.Size(164, 17);
 			this.NullReportCheckbox.TabIndex = 10;
@@ -485,7 +495,7 @@
 			// InvalidTypesReportCheckBox
 			// 
 			this.InvalidTypesReportCheckBox.AutoSize = true;
-			this.InvalidTypesReportCheckBox.Location = new System.Drawing.Point(290, 358);
+			this.InvalidTypesReportCheckBox.Location = new System.Drawing.Point(7, 112);
 			this.InvalidTypesReportCheckBox.Name = "InvalidTypesReportCheckBox";
 			this.InvalidTypesReportCheckBox.Size = new System.Drawing.Size(147, 17);
 			this.InvalidTypesReportCheckBox.TabIndex = 11;
@@ -496,9 +506,9 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RuleSetLocation});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 393);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 379);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(702, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(674, 22);
 			this.statusStrip1.SizingGrip = false;
 			this.statusStrip1.TabIndex = 12;
 			this.statusStrip1.Text = "statusStrip1";
@@ -513,23 +523,22 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(702, 415);
+			this.ClientSize = new System.Drawing.Size(674, 401);
 			this.Controls.Add(this.statusStrip1);
-			this.Controls.Add(this.InvalidTypesReportCheckBox);
-			this.Controls.Add(this.NullReportCheckbox);
-			this.Controls.Add(this.IncludePivotCheckBox);
 			this.Controls.Add(this.SaveButton);
 			this.Controls.Add(this.EnumLabel);
 			this.Controls.Add(this.ErrorColorCombo);
 			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.HyperLinkEnabledCheckbox);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(690, 440);
 			this.Name = "ReportingOptions";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Reporting Options";
 			this.TopMost = true;
