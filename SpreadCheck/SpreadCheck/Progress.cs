@@ -15,7 +15,6 @@ namespace SpreadCheck
 		private void StopButton_Click(object sender, EventArgs e)
 		{	Form1.rulesrunning = false;
 		}
-		private void SaveExitButton_Click(object sender, EventArgs e)
-		{		}
+
 	}
 }

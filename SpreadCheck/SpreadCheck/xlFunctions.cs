@@ -5,18 +5,48 @@ using System.Text;
 
 namespace SpreadCheck
 {
-    class XLFunctions
-    {
-        public string TrimCell(string Cell)
-        {   if (!String.IsNullOrEmpty(Cell))
-                return Cell.Trim(); 
-            else return Cell;        
+	class XLFunctions
+	{
+		public int FunctionCallCount;
+
+		public object TrimCell(object Cell)
+		{	switch (Cell) {
+				case string s:
+
+				if (!String.IsNullOrEmpty(s)) {
+					FunctionCallCount++;
+					return s.Trim();
+				}
+				else return s;
+				break;
+
+				default:
+				break;
+			}
+			return Cell;
+
         }
 
-        public string ToUpperCase(string Cell)
-        {  if (!String.IsNullOrEmpty(Cell))
-                return Cell.ToUpper();
-            else return Cell;
+
+		public object ToUpperCase(object Cell)
+		{
+			switch (Cell) {
+
+				case string s:
+
+				if (!String.IsNullOrEmpty(s)) {
+					FunctionCallCount++;
+					return s.ToUpper();
+				}
+
+				else return Cell;
+				break;
+
+				default:
+				break;
+			}
+
+			return Cell;
         }
 
         public string ChangeCase(string Cell, int ChangeType)
@@ -24,19 +54,24 @@ namespace SpreadCheck
                 {   switch (ChangeType)
                     {
 					case 0:
-                        return Cell;
-					break;
+						FunctionCallCount++;
+						return Cell;
+						break;
                     case 1:
-                        return Cell.ToUpper();
+						FunctionCallCount++;
+						return Cell.ToUpper();
                         break;
                     case 2:
-                        return Cell.ToLower();
+						FunctionCallCount++;
+						return Cell.ToLower();
                         break;
                     case 3:
-                        return Cell.ToUpperInvariant();
+						FunctionCallCount++;
+						return Cell.ToUpperInvariant();
                         break;
                     case 4:
-                        return Cell.ToLowerInvariant();
+						FunctionCallCount++;
+						return Cell.ToLowerInvariant();
                         break;
                     default:
                         return Cell;
@@ -47,15 +82,19 @@ namespace SpreadCheck
         }
 
         public string ToLowerCase(string Cell)
-        {   if (!String.IsNullOrEmpty(Cell))
-                return Cell.ToLower();
-            else return Cell;
+        {   if (!String.IsNullOrEmpty(Cell)) {
+				FunctionCallCount++;
+				return Cell.ToLower();
+			}
+			else return Cell;
         }
 
         public string ReverseCell(string Cell)
-        {  if (!String.IsNullOrEmpty(Cell))
-                return new string(Cell.Reverse().ToArray());
-            else return Cell;
+        {  if (!String.IsNullOrEmpty(Cell)) {
+				FunctionCallCount++;
+				return new string(Cell.Reverse().ToArray());
+			}
+			else return Cell;
         }
     }
 }

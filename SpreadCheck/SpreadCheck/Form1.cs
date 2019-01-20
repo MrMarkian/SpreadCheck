@@ -58,7 +58,6 @@ namespace SpreadCheck
 		/*  --- OPEN FILE ------*/
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {   int MaxCount = 100;
-
 			RuleList = null;
 			RuleList = new ColumnRules [100];
 			HeaderList.Items.Clear();
@@ -67,11 +66,12 @@ namespace SpreadCheck
             { RuleList[b] = new ColumnRules(); }
 	
             try
-            {	openFileDialog.ShowDialog();
+            {	openExcelFileDialog.ShowDialog();
                 StatusLabel.Text = "Initialising Excel Engine...";
-				xlWorkBook = xlApp.Workbooks.Open(openFileDialog.FileName);            
+				xlWorkBook = xlApp.Workbooks.Open(Filename:openExcelFileDialog.FileName, Notify:true, UpdateLinks: updateLinksOnOpenToolStripMenuItem.Checked);            
             }	catch { return; }
-
+			ColumnHeaderStart.Text = "1";
+			RowHeaderStart.Text = "1";
 			StatusLabel.Text = "Connecting to Worksheet...";
 			xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 			StatusLabel.Text = "Detecting Used Range...";
@@ -110,11 +110,11 @@ namespace SpreadCheck
            
            Report = new Reporter(xlWorkBook, xlWorkSheet, endcolumn);
            
-			this.Text = "SpreadChecker - " + openFileDialog.SafeFileName;
+			this.Text = "SpreadChecker - " + openExcelFileDialog.SafeFileName;
 
 			//Check for existing settings... 
 
-			string fullpath = Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Path.GetFileNameWithoutExtension(openFileDialog.FileName) + ".dat";
+			string fullpath = Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Path.GetFileNameWithoutExtension(openExcelFileDialog.FileName) + ".dat";
 		
 			reportForm.RuleSetLocation.Text = fullpath;
 
@@ -137,13 +137,13 @@ namespace SpreadCheck
         }
 
         public void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {   try
-            {   xlWorkBook.Close(true, openFileDialog.FileName, null);
-                xlApp.Quit();
-                releaseObject(xlWorkSheet);
-                releaseObject(xlWorkBook);
-                releaseObject(xlApp);				
-            }	catch { };
+        {   try {
+				xlWorkBook.Close(true, openExcelFileDialog.FileName, null);
+				xlApp.Quit();
+				releaseObject(xlWorkSheet);
+				releaseObject(xlWorkBook);
+				releaseObject(xlApp);
+			} catch { MessageBox.Show("Save Cancelled"); }
 		
         }
 
@@ -296,7 +296,7 @@ namespace SpreadCheck
 				for (int Col = Convert.ToInt32(ColumnHeaderStart.Text.Trim()); Col < endcolumn; Col++) {
 					if (!rulesrunning) {
 						progress.StopButton.Visible = false;
-						progress.SaveExitButton.Visible = true;
+						
 						return;
 					}
 					try {
@@ -328,6 +328,7 @@ namespace SpreadCheck
 							time = TimeSpan.FromMilliseconds(sw.ElapsedMilliseconds);
 							string answer = string.Format("{0:D2}h:{1:D2}m:{2:D2}s", time.Hours, time.Minutes, time.Seconds);
 							progress.ElapsedLabel.Text = "Time Elapsed:" + answer;
+							progress.FunctionsRunLabel.Text = "Functions Run:" + xlFunc.FunctionCallCount.ToString();
 
 							Application.DoEvents();
 						}
@@ -337,8 +338,7 @@ namespace SpreadCheck
 
 			Form1.Report.CleanUpReport();
 			progress.StopButton.Visible = false;
-			progress.EmailButton.Visible = true;
-			progress.SaveExitButton.Visible = true;
+			
 			StatusLabel.Text = "Complete!...";
         }
 
@@ -569,9 +569,9 @@ namespace SpreadCheck
 
 
 		private void saveRuleSetsToolStripMenuItem_Click(object sender, EventArgs e)
-		{	saveFileDialog.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+		{	saveSettingsDialog.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
 			StatusLabel.Text = "Saving RuleSets.... ";
-			try { saveFileDialog.ShowDialog(); } catch { };
+			try { saveSettingsDialog.ShowDialog(); } catch { };
 			SaveSettings(saveFileDialog.FileName);
 
 			StatusLabel.Text = "Idle.... ";
@@ -579,8 +579,8 @@ namespace SpreadCheck
 
 		private void loadRuleSetsToolStripMenuItem_Click(object sender, EventArgs e)
 		{	StatusLabel.Text = "Loading RuleSets.... ";
-			try { openFileDialog.ShowDialog(); } catch { }
-			LoadSettings(openFileDialog.FileName);
+			try { openSettingsDialog.ShowDialog(); } catch { }
+			LoadSettings(openSettingsDialog.FileName);
 				StatusLabel.Text = "Idle.... ";
 		}
 
@@ -589,6 +589,14 @@ namespace SpreadCheck
 			PreviewData pForm = new PreviewData(xlWorkBook, xlWorkSheet, Convert.ToInt32(LastRow.Text),HeaderList.SelectedIndex);
 			
 			pForm.ShowDialog();
+		}
+
+		private void updateLinksOnOpenToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (this.updateLinksOnOpenToolStripMenuItem.Checked == true)
+				this.updateLinksOnOpenToolStripMenuItem.Checked = false; 
+			else this.updateLinksOnOpenToolStripMenuItem.Checked = true;
+
 		}
 	}
 }

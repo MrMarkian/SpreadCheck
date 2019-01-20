@@ -82,6 +82,7 @@
 			this.lessThanCheckBox = new System.Windows.Forms.CheckBox();
 			this.MoreThanCheckBox = new System.Windows.Forms.CheckBox();
 			this.Functions = new System.Windows.Forms.GroupBox();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.NumberFormatCombo = new System.Windows.Forms.ComboBox();
 			this.TextAlignmentList = new System.Windows.Forms.ComboBox();
 			this.TextRealignCheckbox = new System.Windows.Forms.CheckBox();
@@ -91,7 +92,7 @@
 			this.TrimCheckBox = new System.Windows.Forms.CheckBox();
 			this.EnabledCheckBox = new System.Windows.Forms.CheckBox();
 			this.RunButton = new System.Windows.Forms.Button();
-			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.openExcelFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.colrowlabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -102,7 +103,9 @@
 			this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.openSettingsDialog = new System.Windows.Forms.OpenFileDialog();
+			this.saveSettingsDialog = new System.Windows.Forms.SaveFileDialog();
+			this.updateLinksOnOpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.RulesGroupBox.SuspendLayout();
 			this.GroupBox2.SuspendLayout();
@@ -119,11 +122,13 @@
 			this.HeaderList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.HeaderList.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.HeaderList.FormattingEnabled = true;
+			this.HeaderList.ItemHeight = 18;
 			this.HeaderList.Location = new System.Drawing.Point(12, 29);
 			this.HeaderList.MinimumSize = new System.Drawing.Size(240, 500);
 			this.HeaderList.Name = "HeaderList";
-			this.HeaderList.Size = new System.Drawing.Size(244, 537);
+			this.HeaderList.Size = new System.Drawing.Size(244, 526);
 			this.HeaderList.TabIndex = 0;
 			this.HeaderList.SelectedIndexChanged += new System.EventHandler(this.HeaderList_SelectedIndexChanged);
 			// 
@@ -160,6 +165,7 @@
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
+            this.updateLinksOnOpenToolStripMenuItem,
             this.toolStripSeparator2,
             this.loadRuleSetsToolStripMenuItem,
             this.saveRuleSetsToolStripMenuItem,
@@ -172,38 +178,38 @@
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.openToolStripMenuItem.Text = "Open";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(144, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(188, 6);
 			// 
 			// loadRuleSetsToolStripMenuItem
 			// 
 			this.loadRuleSetsToolStripMenuItem.Name = "loadRuleSetsToolStripMenuItem";
-			this.loadRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+			this.loadRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.loadRuleSetsToolStripMenuItem.Text = "Load RuleSets";
 			this.loadRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.loadRuleSetsToolStripMenuItem_Click);
 			// 
 			// saveRuleSetsToolStripMenuItem
 			// 
 			this.saveRuleSetsToolStripMenuItem.Name = "saveRuleSetsToolStripMenuItem";
-			this.saveRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+			this.saveRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.saveRuleSetsToolStripMenuItem.Text = "Save RuleSets";
 			this.saveRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.saveRuleSetsToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(144, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(188, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -225,7 +231,7 @@
             this.columnHeaderStartToolStripMenuItem,
             this.columnHeaderEndToolStripMenuItem});
 			this.columnToolStripMenuItem.Name = "columnToolStripMenuItem";
-			this.columnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.columnToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.columnToolStripMenuItem.Text = "Column";
 			// 
 			// columnHeaderStartToolStripMenuItem
@@ -262,7 +268,7 @@
             this.rowHeaderStartToolStripMenuItem,
             this.lastRowToolStripMenuItem});
 			this.rowToolStripMenuItem.Name = "rowToolStripMenuItem";
-			this.rowToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.rowToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.rowToolStripMenuItem.Text = "Row";
 			// 
 			// rowHeaderStartToolStripMenuItem
@@ -298,19 +304,19 @@
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(173, 6);
 			// 
 			// enableAllRuleSetsToolStripMenuItem
 			// 
 			this.enableAllRuleSetsToolStripMenuItem.Name = "enableAllRuleSetsToolStripMenuItem";
-			this.enableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.enableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.enableAllRuleSetsToolStripMenuItem.Text = "Enable All RuleSets";
 			this.enableAllRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.enableAllRuleSetsToolStripMenuItem_Click);
 			// 
 			// disableAllRuleSetsToolStripMenuItem
 			// 
 			this.disableAllRuleSetsToolStripMenuItem.Name = "disableAllRuleSetsToolStripMenuItem";
-			this.disableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.disableAllRuleSetsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.disableAllRuleSetsToolStripMenuItem.Text = "Disable All RuleSets";
 			this.disableAllRuleSetsToolStripMenuItem.Click += new System.EventHandler(this.disableAllRuleSetsToolStripMenuItem_Click);
 			// 
@@ -470,7 +476,7 @@
 			this.AllowedItemsList.FormattingEnabled = true;
 			this.AllowedItemsList.Location = new System.Drawing.Point(129, 13);
 			this.AllowedItemsList.Name = "AllowedItemsList";
-			this.AllowedItemsList.Size = new System.Drawing.Size(179, 217);
+			this.AllowedItemsList.Size = new System.Drawing.Size(179, 212);
 			this.AllowedItemsList.TabIndex = 3;
 			// 
 			// CheckDateTimeCheckBox
@@ -691,6 +697,17 @@
 			this.Functions.TabStop = false;
 			this.Functions.Text = "Functions";
 			// 
+			// checkBox1
+			// 
+			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Location = new System.Drawing.Point(6, 178);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(135, 17);
+			this.checkBox1.TabIndex = 10;
+			this.checkBox1.Text = "Change Cell Formatting";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			// 
 			// NumberFormatCombo
 			// 
 			this.NumberFormatCombo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -818,9 +835,9 @@
 			this.RunButton.UseVisualStyleBackColor = true;
 			this.RunButton.Click += new System.EventHandler(this.RunButton_Click);
 			// 
-			// openFileDialog
+			// openExcelFileDialog
 			// 
-			this.openFileDialog.FileName = "*.xlsx";
+			this.openExcelFileDialog.FileName = "*.xlsx";
 			// 
 			// statusStrip1
 			// 
@@ -902,16 +919,14 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Double - RuleSet";
 			// 
-			// checkBox1
+			// updateLinksOnOpenToolStripMenuItem
 			// 
-			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(6, 178);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(135, 17);
-			this.checkBox1.TabIndex = 10;
-			this.checkBox1.Text = "Change Cell Formatting";
-			this.checkBox1.UseVisualStyleBackColor = true;
+			this.updateLinksOnOpenToolStripMenuItem.Checked = true;
+			this.updateLinksOnOpenToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.updateLinksOnOpenToolStripMenuItem.Name = "updateLinksOnOpenToolStripMenuItem";
+			this.updateLinksOnOpenToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+			this.updateLinksOnOpenToolStripMenuItem.Text = "Update Links on Open";
+			this.updateLinksOnOpenToolStripMenuItem.Click += new System.EventHandler(this.updateLinksOnOpenToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 
@@ -970,7 +985,7 @@
         private System.Windows.Forms.ToolStripTextBox RowHeaderStart;
         private System.Windows.Forms.ToolStripMenuItem lastRowToolStripMenuItem;
         private System.Windows.Forms.GroupBox RulesGroupBox;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.OpenFileDialog openExcelFileDialog;
         internal System.Windows.Forms.CheckBox EnabledCheckBox;
         internal System.Windows.Forms.Button RunButton;
         internal System.Windows.Forms.CheckBox AllowValuesCheckbox;
@@ -1030,6 +1045,9 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ToolStripMenuItem previewColumnDataToolStripMenuItem;
 		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.OpenFileDialog openSettingsDialog;
+		private System.Windows.Forms.SaveFileDialog saveSettingsDialog;
+		private System.Windows.Forms.ToolStripMenuItem updateLinksOnOpenToolStripMenuItem;
 	}
 }
 

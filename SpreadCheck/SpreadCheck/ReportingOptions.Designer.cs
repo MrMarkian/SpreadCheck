@@ -30,8 +30,12 @@
 		{
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.IncludeFullRow = new System.Windows.Forms.RadioButton();
+			this.IncludePivotCheckBox = new System.Windows.Forms.CheckBox();
+			this.InvalidTypesReportCheckBox = new System.Windows.Forms.CheckBox();
 			this.IncludeEnabledColumns = new System.Windows.Forms.RadioButton();
+			this.NullReportCheckbox = new System.Windows.Forms.CheckBox();
 			this.IncludeOriginalData = new System.Windows.Forms.CheckBox();
+			this.HyperLinkEnabledCheckbox = new System.Windows.Forms.CheckBox();
 			this.CellEmptyErrorText = new System.Windows.Forms.TextBox();
 			this.CellContainsSpacesError = new System.Windows.Forms.TextBox();
 			this.CellContainsNonAlphaError = new System.Windows.Forms.TextBox();
@@ -61,7 +65,6 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
-			this.HyperLinkEnabledCheckbox = new System.Windows.Forms.CheckBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.UseColumnNumberRadio = new System.Windows.Forms.RadioButton();
 			this.UseHeaderNamesRadio = new System.Windows.Forms.RadioButton();
@@ -69,9 +72,6 @@
 			this.ErrorColorCombo = new System.Windows.Forms.ComboBox();
 			this.EnumLabel = new System.Windows.Forms.Label();
 			this.SaveButton = new System.Windows.Forms.Button();
-			this.IncludePivotCheckBox = new System.Windows.Forms.CheckBox();
-			this.NullReportCheckbox = new System.Windows.Forms.CheckBox();
-			this.InvalidTypesReportCheckBox = new System.Windows.Forms.CheckBox();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.RuleSetLocation = new System.Windows.Forms.ToolStripStatusLabel();
 			this.groupBox1.SuspendLayout();
@@ -106,6 +106,27 @@
 			this.IncludeFullRow.Text = "Include full row of Data";
 			this.IncludeFullRow.UseVisualStyleBackColor = true;
 			// 
+			// IncludePivotCheckBox
+			// 
+			this.IncludePivotCheckBox.AutoSize = true;
+			this.IncludePivotCheckBox.ForeColor = System.Drawing.Color.Red;
+			this.IncludePivotCheckBox.Location = new System.Drawing.Point(7, 158);
+			this.IncludePivotCheckBox.Name = "IncludePivotCheckBox";
+			this.IncludePivotCheckBox.Size = new System.Drawing.Size(170, 17);
+			this.IncludePivotCheckBox.TabIndex = 9;
+			this.IncludePivotCheckBox.Text = "Inlcude a PivotTable in Report";
+			this.IncludePivotCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// InvalidTypesReportCheckBox
+			// 
+			this.InvalidTypesReportCheckBox.AutoSize = true;
+			this.InvalidTypesReportCheckBox.Location = new System.Drawing.Point(7, 112);
+			this.InvalidTypesReportCheckBox.Name = "InvalidTypesReportCheckBox";
+			this.InvalidTypesReportCheckBox.Size = new System.Drawing.Size(147, 17);
+			this.InvalidTypesReportCheckBox.TabIndex = 11;
+			this.InvalidTypesReportCheckBox.Text = "Report Invalid DataTypes";
+			this.InvalidTypesReportCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// IncludeEnabledColumns
 			// 
 			this.IncludeEnabledColumns.AutoSize = true;
@@ -118,6 +139,16 @@
 			this.IncludeEnabledColumns.Text = "Only Include Enabled Columns";
 			this.IncludeEnabledColumns.UseVisualStyleBackColor = true;
 			// 
+			// NullReportCheckbox
+			// 
+			this.NullReportCheckbox.AutoSize = true;
+			this.NullReportCheckbox.Location = new System.Drawing.Point(7, 89);
+			this.NullReportCheckbox.Name = "NullReportCheckbox";
+			this.NullReportCheckbox.Size = new System.Drawing.Size(164, 17);
+			this.NullReportCheckbox.TabIndex = 10;
+			this.NullReportCheckbox.Text = "Report Null Values in Checks";
+			this.NullReportCheckbox.UseVisualStyleBackColor = true;
+			// 
 			// IncludeOriginalData
 			// 
 			this.IncludeOriginalData.AutoSize = true;
@@ -129,6 +160,17 @@
 			this.IncludeOriginalData.TabIndex = 0;
 			this.IncludeOriginalData.Text = "Inlcude a copy of original data in report";
 			this.IncludeOriginalData.UseVisualStyleBackColor = true;
+			// 
+			// HyperLinkEnabledCheckbox
+			// 
+			this.HyperLinkEnabledCheckbox.AutoSize = true;
+			this.HyperLinkEnabledCheckbox.ForeColor = System.Drawing.Color.Red;
+			this.HyperLinkEnabledCheckbox.Location = new System.Drawing.Point(7, 135);
+			this.HyperLinkEnabledCheckbox.Name = "HyperLinkEnabledCheckbox";
+			this.HyperLinkEnabledCheckbox.Size = new System.Drawing.Size(190, 17);
+			this.HyperLinkEnabledCheckbox.TabIndex = 3;
+			this.HyperLinkEnabledCheckbox.Text = "Inlcude a HyperLink to Errored Cell";
+			this.HyperLinkEnabledCheckbox.UseVisualStyleBackColor = true;
 			// 
 			// CellEmptyErrorText
 			// 
@@ -395,17 +437,6 @@
 			this.label1.TabIndex = 5;
 			this.label1.Text = "Warn If Empty:";
 			// 
-			// HyperLinkEnabledCheckbox
-			// 
-			this.HyperLinkEnabledCheckbox.AutoSize = true;
-			this.HyperLinkEnabledCheckbox.ForeColor = System.Drawing.Color.Red;
-			this.HyperLinkEnabledCheckbox.Location = new System.Drawing.Point(7, 135);
-			this.HyperLinkEnabledCheckbox.Name = "HyperLinkEnabledCheckbox";
-			this.HyperLinkEnabledCheckbox.Size = new System.Drawing.Size(190, 17);
-			this.HyperLinkEnabledCheckbox.TabIndex = 3;
-			this.HyperLinkEnabledCheckbox.Text = "Inlcude a HyperLink to Errored Cell";
-			this.HyperLinkEnabledCheckbox.UseVisualStyleBackColor = true;
-			// 
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.UseColumnNumberRadio);
@@ -470,37 +501,6 @@
 			this.SaveButton.Text = "Save";
 			this.SaveButton.UseVisualStyleBackColor = true;
 			this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
-			// 
-			// IncludePivotCheckBox
-			// 
-			this.IncludePivotCheckBox.AutoSize = true;
-			this.IncludePivotCheckBox.ForeColor = System.Drawing.Color.Red;
-			this.IncludePivotCheckBox.Location = new System.Drawing.Point(7, 158);
-			this.IncludePivotCheckBox.Name = "IncludePivotCheckBox";
-			this.IncludePivotCheckBox.Size = new System.Drawing.Size(170, 17);
-			this.IncludePivotCheckBox.TabIndex = 9;
-			this.IncludePivotCheckBox.Text = "Inlcude a PivotTable in Report";
-			this.IncludePivotCheckBox.UseVisualStyleBackColor = true;
-			// 
-			// NullReportCheckbox
-			// 
-			this.NullReportCheckbox.AutoSize = true;
-			this.NullReportCheckbox.Location = new System.Drawing.Point(7, 89);
-			this.NullReportCheckbox.Name = "NullReportCheckbox";
-			this.NullReportCheckbox.Size = new System.Drawing.Size(164, 17);
-			this.NullReportCheckbox.TabIndex = 10;
-			this.NullReportCheckbox.Text = "Report Null Values in Checks";
-			this.NullReportCheckbox.UseVisualStyleBackColor = true;
-			// 
-			// InvalidTypesReportCheckBox
-			// 
-			this.InvalidTypesReportCheckBox.AutoSize = true;
-			this.InvalidTypesReportCheckBox.Location = new System.Drawing.Point(7, 112);
-			this.InvalidTypesReportCheckBox.Name = "InvalidTypesReportCheckBox";
-			this.InvalidTypesReportCheckBox.Size = new System.Drawing.Size(147, 17);
-			this.InvalidTypesReportCheckBox.TabIndex = 11;
-			this.InvalidTypesReportCheckBox.Text = "Report Invalid DataTypes";
-			this.InvalidTypesReportCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// statusStrip1
 			// 

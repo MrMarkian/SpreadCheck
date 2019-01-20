@@ -94,6 +94,7 @@
 			this.Controls.Add(this.PreviewList);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "PreviewData";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Data Preview";
 			((System.ComponentModel.ISupportInitialize)(this.MaxRowNumber)).EndInit();
 			this.ResumeLayout(false);
