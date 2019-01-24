@@ -97,7 +97,10 @@ namespace SpreadCheck
 			else
 			{	reportingToolStripMenuItem.Enabled = true;
 				EnabledCheckBox.Enabled = true;
-				HeaderList.SelectedIndex = 0;
+                try
+                {
+                    HeaderList.SelectedIndex = 0;
+                }catch  { MessageBox.Show("Loading Failed"); }
 				ColumnnHeaderEnd.Text = endcolumn.ToString(); }
             StatusLabel.Text = "Detecting Last Row...";
             foundLastRow= xlWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing).Row;

@@ -27,3 +27,19 @@ C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\Spread
 C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.PreviewData.resources
 C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe.CodeAnalysisLog.xml
 C:\Moscows Documents\GitHub\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe.lastcodeanalysissucceeded
+E:\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe
+E:\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.pdb
+E:\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe.CodeAnalysisLog.xml
+E:\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe.lastcodeanalysissucceeded
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csprojAssemblyReference.cache
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.ResolveComReference.cache
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.DateTimeForm.resources
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.Form1.resources
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.PreviewData.resources
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.Progress.resources
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.Properties.Resources.resources
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.ReportingOptions.resources
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.GenerateResource.cache
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.CoreCompileInputs.cache
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.exe
+E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.pdb
