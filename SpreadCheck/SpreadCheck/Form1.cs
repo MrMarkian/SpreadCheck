@@ -272,9 +272,10 @@ namespace SpreadCheck
         private void RunButton_Click(object sender, EventArgs e)
         {	StatusLabel.Text = "Running...";
 			Stopwatch sw = new Stopwatch();
-			sw.Start();
 			TimeSpan time = new TimeSpan();
-			progress.Show();
+
+			sw.Start();
+            progress.Show();
 			
 			progress.RunProgress.Visible = true;
 
@@ -304,8 +305,7 @@ namespace SpreadCheck
 					}
 					try {
 						if (RuleList [Col - 1].Enabled)  //If a rule is enabled, begin processing
-						{
-							pos.Col = Col; pos.Row = Row;
+						{	pos.Col = Col; pos.Row = Row;
 							progress.RowCheckLabel.Text = "Row:" + Row.ToString();
 							progress.ColumnCheckLabel.Text = "Column:" + Col.ToString();
 
@@ -353,8 +353,7 @@ namespace SpreadCheck
 				foreach (string Array in RuleList [HeaderList.SelectedIndex].AllowedValuesArray)
 				{	RuleList [HeaderList.SelectedIndex].AllowedValuesArray [b] = "";
 					b++;		}
-
-				int a= 0;
+                int a= 0;
 
 				foreach (var ListBoxItem in AllowedItemsList.Items)
 				{	RuleList [HeaderList.SelectedIndex].AllowedValuesArray [a] = AllowedItemsList.Items [a].ToString();
