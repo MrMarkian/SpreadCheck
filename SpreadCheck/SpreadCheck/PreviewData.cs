@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Globalization;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -12,17 +7,15 @@ namespace SpreadCheck
 {
 	public partial class PreviewData : Form
 	{
-		public Excel.Workbook xlWrkBk;
-		Excel.Worksheet xlPreviewSheet;
+		private readonly Excel.Worksheet _xlPreviewSheet;
 
-		public int ColumNumber;
+		private readonly int _columnNumber;
 	
 
-		public PreviewData(Excel.Workbook xlWorkbook, Excel.Worksheet curSheet, int endPosition, int ColumnNo)
+		public PreviewData(Excel._Workbook xlWorkbook, int endPosition, int columnNo)
 		{
-			xlWrkBk = xlWorkbook;
-			xlPreviewSheet = (Excel.Worksheet)xlWrkBk.Worksheets.get_Item(1);
-			ColumNumber = ColumnNo +1;
+			_xlPreviewSheet = (Excel.Worksheet)xlWorkbook.Worksheets.Item[Index: 1];
+			_columnNumber = columnNo +1;
 			
 			InitializeComponent();
 			MaxRowNumber.Maximum = endPosition+1;
@@ -34,21 +27,21 @@ namespace SpreadCheck
 			PreviewList.Items.Clear();
 			for (int count =1; count < MaxRowNumber.Value +1; count++) {
 				
-				switch (xlPreviewSheet.Cells [count, ColumNumber].Value) {
-					case string s:
-					PreviewList.Items.Add(xlPreviewSheet.Cells [count, ColumNumber].Value);
+				switch (_xlPreviewSheet.Cells [count, _columnNumber].Value) {
+					case string stringValue:
+					PreviewList.Items.Add(stringValue);
 					break;
 
-					case double d:
-					PreviewList.Items.Add(Convert.ToString(xlPreviewSheet.Cells [count, ColumNumber].Value));
+					case double doubleValue:
+					PreviewList.Items.Add(Convert.ToString(doubleValue, CultureInfo.InvariantCulture));
 					break;
 
-					case DateTime dt:
-					PreviewList.Items.Add(dt.ToString());
+					case DateTime dateTimeValue:
+					PreviewList.Items.Add(dateTimeValue.ToString(CultureInfo.InvariantCulture));
 					break;
 
-					case bool bl:
-					PreviewList.Items.Add(bl.ToString());
+					case bool boolValue:
+					PreviewList.Items.Add(boolValue.ToString());
 					break;
 
 					case null:

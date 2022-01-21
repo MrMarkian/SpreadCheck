@@ -79,7 +79,7 @@ namespace SpreadCheck
 
 			//Excel.PivotCache pivotCache = (Excel.PivotCache)xlWrkBk.PivotCaches().Add(Excel.XlPivotTableSourceType.xlDatabase, DataRange);
 
-			Excel.PivotCache pivotCache = (Excel.PivotCache)Form1.xlWorkBook.PivotCaches().Add(Excel.XlPivotTableSourceType.xlDatabase, DataRange);
+			Excel.PivotCache pivotCache = (Excel.PivotCache)Form1.XlWorkBook.PivotCaches().Add(Excel.XlPivotTableSourceType.xlDatabase, DataRange);
 			var pivotTables = (Excel.PivotTables)xlErrorSheet.PivotTables();
 			var pivotTable = pivotTables.Add(pivotCache, pRange, "PivotTable1");
         }
