@@ -101,7 +101,7 @@ namespace SpreadCheck
         {
 	        // StatusLabel.Text = @"Detecting Used Range...";
 	        // not sure why this is needed at this point doesn't seam to be used
-	        // _range = _xlWorkSheet.UsedRange;
+	        // _range = xlWorkSheet.UsedRange;
 
 	        //TODO Might be worth having this auto detect using used range?
 	        //TODO Test other functions
@@ -334,69 +334,44 @@ namespace SpreadCheck
         private void RunButton_Click(object sender, EventArgs e)
         {	
 	        //TODO Work out why theres no errors showing in the test worksheet for blanks
+	        //TODO Last Column not working
 	        StatusLabel.Text = @"Running...";
-			Stopwatch sw = new Stopwatch();
+	        
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
 
-			sw.Start();
-            _progress.Show();
-			
-			_progress.RunProgress.Visible = true;
+			DisableOptions();
 
-			RulesGroupBox.Enabled = false;
-			HeaderList.Enabled = false;
-			RunButton.Enabled = false;
-			
-            var pos = new Position();
-            var check = new RuleCheck(XlWorkSheet);
-            var xlFunc = new XLFunctions();
-            int enabledCount = 0;
-			_progress.RunProgress.Minimum = 0;
-         
-            for (int countEnabled = 0; countEnabled < _endColumn; countEnabled++)
-            {  if (RuleList[countEnabled].Enabled) { enabledCount++; }
+			// ??
+			Position cellPosition = new Position();
+            RuleCheck check = new RuleCheck(XlWorkSheet);
+            XLFunctions xlFunc = new XLFunctions();
+            
+            int enabledRuleListCount = 0;
+            for (int ruleListIndex = 0; ruleListIndex < _endColumn; ruleListIndex++)
+            {  if (RuleList[ruleListIndex].Enabled) { enabledRuleListCount++; }
             }
 
-			_progress.RunProgress.Maximum = _foundLastRow  * enabledCount;
-            Report.MakeHeaders(_xlWorkSheet, Convert.ToInt32(ColumnHeaderStart.Text.Trim()),(Convert.ToInt32(ColumnHeaderStart.Text.Trim()) + _endColumn), Convert.ToInt32(RowHeaderStart.Text.Trim()),RuleList);
-
-			for (int row = Convert.ToInt32(RowHeaderStart.Text.Trim()) + 1; row < ColumnRules.ReturnLastDetectedRow(); row++) {
-				for (int column = Convert.ToInt32(ColumnHeaderStart.Text.Trim()); column < _endColumn; column++) {
-					if (!RulesRunning) {
-						_progress.StopButton.Visible = false;
-						
-						return;
-					}
+            SetUpProgressBar(enabledRuleListCount);
+            
+			// Converting user input string to number
+			int columnStart = Convert.ToInt32(ColumnHeaderStart.Text.Trim());
+			int rowStart = Convert.ToInt32(RowHeaderStart.Text.Trim());
+			int columnEnd = columnStart + _endColumn;
+            Report.MakeHeaders(_xlWorkSheet, columnStart, columnEnd, rowStart, RuleList);
+            
+	        // TODO work out. Why does ColumnRules have last detected row?
+			for (int row = rowStart + 1; row < ColumnRules.ReturnLastDetectedRow(); row++) {
+				for (int column = rowStart; column < _endColumn; column++)
+				{
+					if (IsStopped()) return;
 					try {
 						if (RuleList [column - 1].Enabled)  //If a rule is enabled, begin processing
-						{	pos.Col = column; pos.Row = row;
-							_progress.RowCheckLabel.Text = @"Row:" + row;
-							_progress.ColumnCheckLabel.Text = @"Column:" + column;
+						{	cellPosition.Col = column; cellPosition.Row = row;
 
-							if (RuleList [column - 1].IsEmpty)  //Check for empty cell
-							{ check.CheckifEmpty(_xlWorkSheet.Cells [row, column].Value2, pos); }
-							if (RuleList [column - 1].CheckLength) { check.CheckLength(Cell: _xlWorkSheet.Cells [row, column].Value, pos: pos, Length: RuleList [column - 1].Length); }
-							if (RuleList [column - 1].ContainsSpaces) { check.CheckForSpaces(_xlWorkSheet.Cells [row, column].Value, pos); }
-							if (RuleList [column - 1].ContainsNumber) { check.CheckForNumbers(XlWorkSheet.Cells [row, column].Value, pos); }
-							if (RuleList [column - 1].AllowValuesEnabled) { check.CheckifListEqual(_xlWorkSheet.Cells [row, column].Value, pos, RuleList [column - 1].AllowedValuesArray); }
-							if (RuleList [column - 1].ContainsNonAlpha) { check.CheckForNonAlpha(_xlWorkSheet.Cells [row, column].Value, pos); }
-							if (RuleList [column - 1].ContainsLetters) { check.CheckForLetter(_xlWorkSheet.Cells [row, column].Value, pos); }
-							if (RuleList [column - 1].CheckMustBeginWith) { check.CheckBeginsWith(_xlWorkSheet.Cells [row, column].Value, pos, RuleList [column - 1].MustBeginWith); }
-							if (RuleList [column - 1].CheckMustEndWith) { check.CheckEndsWith(_xlWorkSheet.Cells [row, column].Value, pos, RuleList [column - 1].MustEndWith); }
-							if (RuleList [column - 1].ChangeCaseEnabled) { _xlWorkSheet.Cells [row, column].Value2 = xlFunc.ChangeCase(_xlWorkSheet.Cells [row, column].Value, RuleList [column - 1].ChangeCaseType); }
-							if (RuleList [column - 1].TrimCell) { _xlWorkSheet.Cells [row, column].Value = xlFunc.TrimCell(_xlWorkSheet.Cells [row, column].Value); }
-							if (RuleList [column - 1].ReverseData) { _xlWorkSheet.Cells [row, column].Value = xlFunc.ReverseCell(_xlWorkSheet.Cells [row, column].Value); }
-							if (RuleList[column - 1].CheckMoreThan) { check.CheckNumber(XlWorkSheet.Cells [row, column].Value, pos, RuleList [column - 1].MoreThanValue, true); }
-							if (RuleList [column - 1].CheckLessThan) { check.CheckNumber(XlWorkSheet.Cells [row, column].Value, pos, RuleList [column - 1].LessThanValue, false); }
+							check.ApplyRulesToCell( cellPosition, xlFunc, _xlWorkSheet.Cells[row, column], RuleList[column]);
 
-							if (_progress.RunProgress.Value < _progress.RunProgress.Maximum)
-								_progress.RunProgress.Value++;
-							_progress.ErrorsFoundLabel.Text = @"Errors Found:" + Report.GetErrorNumbers();
-							var time = TimeSpan.FromMilliseconds(sw.ElapsedMilliseconds);
-							string answer = $"{time.Hours:D2}h:{time.Minutes:D2}m:{time.Seconds:D2}s";
-							_progress.ElapsedLabel.Text = $@"Time Elapsed:{answer}";
-							_progress.FunctionsRunLabel.Text = $@"Functions Run:{xlFunc.FunctionCallCount.ToString()}";
-
-							System.Windows.Forms.Application.DoEvents();
+							UpdateProgressInfo(row, column, stopwatch, xlFunc);
 						}
 					} catch (Exception ex){ MessageBox.Show(ex.ToString()); }
 				}
@@ -406,6 +381,50 @@ namespace SpreadCheck
 			_progress.StopButton.Visible = false;
 			
 			StatusLabel.Text = @"Complete!...";
+        }
+
+        
+
+        private void UpdateProgressInfo(int row, int column, Stopwatch stopwatch, XLFunctions xlFunc)
+        {
+	        _progress.RowCheckLabel.Text = @"Row:" + row;
+	        _progress.ColumnCheckLabel.Text = @"Column:" + column;
+	        if (_progress.RunProgress.Value < _progress.RunProgress.Maximum)
+		        _progress.RunProgress.Value++;
+	        _progress.ErrorsFoundLabel.Text = @"Errors Found:" + Report.GetErrorNumbers();
+	        var time = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
+	        string answer = $"{time.Hours:D2}h:{time.Minutes:D2}m:{time.Seconds:D2}s";
+	        _progress.ElapsedLabel.Text = $@"Time Elapsed:{answer}";
+	        _progress.FunctionsRunLabel.Text = $@"Functions Run:{xlFunc.FunctionCallCount.ToString()}";
+	        System.Windows.Forms.Application.DoEvents();
+        }
+
+        private bool IsStopped()
+        {
+	        if (!RulesRunning)
+	        {
+		        _progress.StopButton.Visible = false;
+		        return true;
+	        }
+
+	        return false;
+        }
+
+        private void DisableOptions()
+        {
+	        RulesGroupBox.Enabled = false;
+	        HeaderList.Enabled = false;
+	        RunButton.Enabled = false;
+        }
+
+        private void SetUpProgressBar(int enabledRuleListCount)
+        {
+	        //TODO Fix progress metre and make more obvious function complete
+	        _progress.Show();
+	        _progress.RunProgress.Visible = true;
+	        _progress.RunProgress.Minimum = 0;
+	        // Set progress by number of rows x columns with enabled rule lists
+	        _progress.RunProgress.Maximum = _foundLastRow  * enabledRuleListCount;
         }
 
         private void RemoveItemButton_Click_1(object sender, EventArgs e)
@@ -476,22 +495,22 @@ namespace SpreadCheck
 					bw.Write(ColumnHeaderStart.Text);
 					bw.Write(RowHeaderStart.Text);
 					StatusLabel.Text = @"Saving Error Strings.... ";
-					bw.Write((long)RuleCheck.err.BackCellColor);
-					bw.Write(RuleCheck.err.EmptyError);
-					bw.Write(RuleCheck.err.SpacesError);
-					bw.Write(RuleCheck.err.NonAlpaError);
-					bw.Write(RuleCheck.err.IfNumbersError);
-					bw.Write(RuleCheck.err.IfLettersError);
-					bw.Write(RuleCheck.err.MustBeginWithError);
-					bw.Write(RuleCheck.err.MustEndWithError);
-					bw.Write(RuleCheck.err.MustHaveLenghtError);
-					bw.Write(RuleCheck.err.AllowedItemsListError);
-					bw.Write(RuleCheck.err.IfMoreThanError);
-					bw.Write(RuleCheck.err.IfLessThanError);
-					bw.Write(RuleCheck.err.StringEqual);
-					bw.Write(RuleCheck.err.CellNull);
-					bw.Write(RuleCheck.err.UnexpectedDataTypeError);
-					bw.Write(RuleCheck.err.BackCellColor.ToString());
+					bw.Write((long)RuleCheck.Err.BackCellColor);
+					bw.Write(RuleCheck.Err.EmptyError);
+					bw.Write(RuleCheck.Err.SpacesError);
+					bw.Write(RuleCheck.Err.NonAlpaError);
+					bw.Write(RuleCheck.Err.IfNumbersError);
+					bw.Write(RuleCheck.Err.IfLettersError);
+					bw.Write(RuleCheck.Err.MustBeginWithError);
+					bw.Write(RuleCheck.Err.MustEndWithError);
+					bw.Write(RuleCheck.Err.MustHaveLenghtError);
+					bw.Write(RuleCheck.Err.AllowedItemsListError);
+					bw.Write(RuleCheck.Err.IfMoreThanError);
+					bw.Write(RuleCheck.Err.IfLessThanError);
+					bw.Write(RuleCheck.Err.StringEqual);
+					bw.Write(RuleCheck.Err.CellNull);
+					bw.Write(RuleCheck.Err.UnexpectedDataTypeError);
+					bw.Write(RuleCheck.Err.BackCellColor.ToString());
 					bw.Write(Report.IncludeHyperLink);
 					bw.Write(Report.IncludeOriginalData);
 					bw.Write(Report.IncludeEnabledData);
@@ -556,22 +575,22 @@ namespace SpreadCheck
 					ColumnHeaderStart.Text=br.ReadString();
 					RowHeaderStart.Text = br.ReadString();
 					StatusLabel.Text = @"Loading Error Strings.... ";
-					RuleCheck.err.BackCellColor = (XlRgbColor)br.ReadInt64();
-					RuleCheck.err.EmptyError = br.ReadString();
-					RuleCheck.err.SpacesError = br.ReadString();
-					RuleCheck.err.NonAlpaError = br.ReadString();
-					RuleCheck.err.IfNumbersError = br.ReadString();
-					RuleCheck.err.IfLettersError = br.ReadString();
-					RuleCheck.err.MustBeginWithError = br.ReadString();
-					RuleCheck.err.MustEndWithError = br.ReadString();
-					RuleCheck.err.MustHaveLenghtError = br.ReadString();
-					RuleCheck.err.AllowedItemsListError = br.ReadString();
-					RuleCheck.err.IfMoreThanError = br.ReadString();
-					RuleCheck.err.IfLessThanError = br.ReadString();
-					RuleCheck.err.StringEqual = br.ReadString();
-					RuleCheck.err.CellNull = br.ReadString();
-					RuleCheck.err.UnexpectedDataTypeError = br.ReadString();
-					RuleCheck.err.BackCellColor = (XlRgbColor)Enum.Parse(typeof(XlRgbColor), br.ReadString());
+					RuleCheck.Err.BackCellColor = (XlRgbColor)br.ReadInt64();
+					RuleCheck.Err.EmptyError = br.ReadString();
+					RuleCheck.Err.SpacesError = br.ReadString();
+					RuleCheck.Err.NonAlpaError = br.ReadString();
+					RuleCheck.Err.IfNumbersError = br.ReadString();
+					RuleCheck.Err.IfLettersError = br.ReadString();
+					RuleCheck.Err.MustBeginWithError = br.ReadString();
+					RuleCheck.Err.MustEndWithError = br.ReadString();
+					RuleCheck.Err.MustHaveLenghtError = br.ReadString();
+					RuleCheck.Err.AllowedItemsListError = br.ReadString();
+					RuleCheck.Err.IfMoreThanError = br.ReadString();
+					RuleCheck.Err.IfLessThanError = br.ReadString();
+					RuleCheck.Err.StringEqual = br.ReadString();
+					RuleCheck.Err.CellNull = br.ReadString();
+					RuleCheck.Err.UnexpectedDataTypeError = br.ReadString();
+					RuleCheck.Err.BackCellColor = (XlRgbColor)Enum.Parse(typeof(XlRgbColor), br.ReadString());
 
 					Report.IncludeHyperLink = br.ReadBoolean();
 					Report.IncludeOriginalData = br.ReadBoolean();
