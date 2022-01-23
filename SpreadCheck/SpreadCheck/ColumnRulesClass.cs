@@ -10,11 +10,12 @@ namespace SpreadCheck
     }
 
     public class ColumnRules
-    {   public const int MaxAllowedValues = 20;
-		public static int LastDetectedRow { get; set; }
+    {
+	    private const int MaxAllowedValues = 20;
+	    private static int LastDetectedRow { get; set; }
 
         public ColumnRules()
-        {  List<string> AllowedValuesArray = new List<string>();
+        {  List<string> allowedValuesArray = new List<string>();
 			ColumnName = "";
 			MustBeginWith = "";
 			MustEndWith = "";

@@ -72,6 +72,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="PickSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PickSheet.Designer.cs">
+      <DependentUpon>PickSheet.cs</DependentUpon>
+    </Compile>
     <Compile Include="PreviewData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PickSheet.resx">
+      <DependentUpon>PickSheet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PreviewData.resx">
       <DependentUpon>PreviewData.cs</DependentUpon>
