@@ -43,3 +43,20 @@ E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.GenerateReso
 E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.CoreCompileInputs.cache
 E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.exe
 E:\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.pdb
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csprojAssemblyReference.cache
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.exe
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.pdb
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.pdb
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe.CodeAnalysisLog.xml
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\bin\Debug\SpreadCheck.exe.lastcodeanalysissucceeded
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.ResolveComReference.cache
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.DateTimeForm.resources
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.Form1.resources
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.PreviewData.resources
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.Progress.resources
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.Properties.Resources.resources
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.ReportingOptions.resources
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.GenerateResource.cache
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.CoreCompileInputs.cache
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.PickSheet.resources

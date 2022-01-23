@@ -2,59 +2,62 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
+using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace SpreadCheck
 {
 	public partial class Form1 : Form
     {
-        public int endcolumn = 0;
-        public int foundLastRow = 0;
-		public static bool rulesrunning = true;
+	    private int _endColumn;
+	    private int _foundLastRow;
+		public static bool RulesRunning = true;
         public static ColumnRules[] RuleList = new ColumnRules[200];
 
-		DateTimeForm dateTimeForm = new DateTimeForm();
-		ReportingOptions reportForm = new ReportingOptions();
-		Progress progress = new Progress();
+        private readonly DateTimeForm _dateTimeForm = new DateTimeForm();
+        private readonly ReportingOptions _reportForm = new ReportingOptions();
+        private readonly Progress _progress = new Progress();
 
 		public class Position
-        {   public Position(int row, int col) { this.Row = row; this.Col = col; }
+        {   public Position(int row, int col) { Row = row; Col = col; }
             public Position() { Row = 0; Col = 0; }
             public int Row { get; set; }
             public int Col { get; set; }
         }
 
-        private Excel.Application xlApp = new Excel.Application();
-        public static Excel.Workbook xlWorkBook;
-        Excel.Worksheet xlWorkSheet;
-        Excel.Range range;
+        private Application _xlApp = new Application();
+        public static Workbook XlWorkBook;
+        private Worksheet _xlWorkSheet;
+        // private Range _range;
         public static Reporter Report;
-        object misvalue = System.Reflection.Missing.Value;
+        public object MissingValue { get; } = Missing.Value;
 
-        public Excel.Worksheet XlWorkSheet { get => xlWorkSheet; set => xlWorkSheet = value; }
-        public Excel.Range Range { get => range; set => range = value; }
-        public Excel.Application XlApp { get => xlApp; set => xlApp = value; }
+        public Worksheet XlWorkSheet { get => _xlWorkSheet; set => _xlWorkSheet = value; }
+        // public Range Range { get => _range; set => _range = value; }
+        public Application XlApp { get => _xlApp; set => _xlApp = value; }
 
         public Form1(){InitializeComponent();}
-        public int GetEndColumn() { return endcolumn; }
+        public int GetEndColumn() { return _endColumn; }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void AddItemButton_Click(object sender, EventArgs e)
         {   RuleList[HeaderList.SelectedIndex].AllowedValuesArray = new List<string>();
             if (ItemCheckTextBox.TextLength > 0)
             {	AllowedItemsList.Items.Add(ItemCheckTextBox.Text);
                 ItemCheckTextBox.Text = "";
-                    foreach (string ListBoxItem in AllowedItemsList.Items)
-                    {	RuleList[HeaderList.SelectedIndex].AllowedValuesArray.Add(ListBoxItem.ToString());		}
+                    foreach (string listBoxItem in AllowedItemsList.Items)
+                    {	RuleList[HeaderList.SelectedIndex].AllowedValuesArray.Add(listBoxItem);		}
             }
         }
 
-        private void Button2_Click(object sender, EventArgs e)
-        {   if (AllowedItemsList.SelectedIndex > -1)
-            {	AllowedItemsList.Items.Add(ItemCheckTextBox.Text);		}
-            else
-            {	MessageBox.Show("Item Not Selected");	}
-        }
+        // private void Button2_Click(object sender, EventArgs e)
+        // {   if (AllowedItemsList.SelectedIndex > -1)
+        //     {	AllowedItemsList.Items.Add(ItemCheckTextBox.Text);		}
+        //     else
+        //     {	MessageBox.Show("Item Not Selected");	}
+        // }
 		/*  --- OPEN FILE ------*/
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {   int MaxCount = 100;
@@ -64,89 +67,148 @@ namespace SpreadCheck
 
             for (int b = 0; b < MaxCount; b++) //initialise
             { RuleList[b] = new ColumnRules(); }
-	
-            try
-            {	openExcelFileDialog.ShowDialog();
-                StatusLabel.Text = "Initialising Excel Engine...";
-				xlWorkBook = xlApp.Workbooks.Open(Filename:openExcelFileDialog.FileName, Notify:true, UpdateLinks: updateLinksOnOpenToolStripMenuItem.Checked);            
-            }	catch { return; }
-			ColumnHeaderStart.Text = "1";
-			RowHeaderStart.Text = "1";
-			StatusLabel.Text = "Connecting to Worksheet...";
-			xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-			StatusLabel.Text = "Detecting Used Range...";
-			range = xlWorkSheet.UsedRange;
 
-			StatusLabel.Text = "Adding Worksheets...";
-			foreach (Excel.Worksheet  Worksheet in xlWorkBook.Worksheets)
-            { SheetComboBox.Items.Add(Worksheet.Name);		}
-            SheetComboBox.SelectedIndex = 0;
+            if (TryOpenExcel()) return;
+            SetRowColumnText();
+            List<string> headers = FindWorksheets();
+            WorkOutWorkBookRange(MaxCount);
+            Array.Resize(ref RuleList, _endColumn);
 
+            StatusLabel.Text = @"Creating Report Sheet...";
+            colrowlabel.Text = $@"C:{_endColumn.ToString()}R:{_foundLastRow.ToString()}";
 
-            StatusLabel.Text = "Detecting End Column...";
-            for (int a = (Convert.ToInt32(ColumnHeaderStart.Text.Trim())); a < MaxCount; a++)
-            {   if( (xlWorkSheet.Cells[Convert.ToInt32(RowHeaderStart.Text.Trim()),a].Value2) == null)
-                { endcolumn =a; a = MaxCount;}
-                else {
-                    HeaderList.Items.Add((string)xlWorkSheet.Cells[Convert.ToInt32(ColumnHeaderStart.Text.Trim()),a].Value2.ToString());
-                    RuleList[a].ColumnName = (string)xlWorkSheet.Cells[Convert.ToInt32(ColumnHeaderStart.Text.Trim()), a].Value2;		}
-                          
-            }
-
-			if (endcolumn == 0) { MessageBox.Show("No Columns Found!"); }
-			else
-			{	reportingToolStripMenuItem.Enabled = true;
-				EnabledCheckBox.Enabled = true;
-                try
-                {
-                    HeaderList.SelectedIndex = 0;
-                }catch  { MessageBox.Show("Loading Failed"); }
-				ColumnnHeaderEnd.Text = endcolumn.ToString(); }
-            StatusLabel.Text = "Detecting Last Row...";
-            foundLastRow= xlWorkSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing).Row;
-            ColumnRules.SetLastDetectedRow(foundLastRow);
-            LastRow.Text = ColumnRules.ReturnLastDetectedRow().ToString();
-            Array.Resize(ref RuleList, endcolumn);
-
-            StatusLabel.Text = "Creating Report Sheet...";
-            colrowlabel.Text = "C:" + endcolumn.ToString() + "R:" + foundLastRow.ToString();
+            Report = new Reporter(XlWorkBook, _xlWorkSheet, _endColumn, headers);
            
-           Report = new Reporter(xlWorkBook, xlWorkSheet, endcolumn);
-           
-			this.Text = "SpreadChecker - " + openExcelFileDialog.SafeFileName;
+			Text = $@"SpreadChecker - {openExcelFileDialog.SafeFileName}";
 
-			//Check for existing settings... 
+			
 
-			string fullpath = Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Path.GetFileNameWithoutExtension(openExcelFileDialog.FileName) + ".dat";
+			string fullPath =
+				$@"{Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath)}\{Path.GetFileNameWithoutExtension(openExcelFileDialog.FileName)}.dat";
 		
-			reportForm.RuleSetLocation.Text = fullpath;
+			_reportForm.RuleSetLocation.Text = fullPath;
 
-			if (File.Exists(fullpath))
-				{ LoadSettings(fullpath); }
+			if (File.Exists(fullPath))
+			{ LoadSettings(fullPath); }
 
 			previewColumnDataToolStripMenuItem.Enabled = true;
-			StatusLabel.Text = "  Idle...";
+			StatusLabel.Text = @"  Idle...";
 		}
+
+        private void WorkOutWorkBookRange(int maxCount)
+        {
+	        // StatusLabel.Text = @"Detecting Used Range...";
+	        // not sure why this is needed at this point doesn't seam to be used
+	        // _range = xlWorkSheet.UsedRange;
+
+	        //TODO Might be worth having this auto detect using used range?
+	        //TODO Test other functions
+	        StatusLabel.Text = @"Detecting End Column...";
+	        for (int a = (Convert.ToInt32(ColumnHeaderStart.Text.Trim())); a < maxCount; a++)
+	        {
+		        if ((_xlWorkSheet.Cells[Convert.ToInt32(RowHeaderStart.Text.Trim()), a].Value2) == null)
+		        {
+			        _endColumn = a;
+			        a = maxCount;
+		        }
+		        else
+		        {
+			        HeaderList.Items.Add((string) _xlWorkSheet.Cells[Convert.ToInt32(ColumnHeaderStart.Text.Trim()), a].Value2
+				        .ToString());
+			        RuleList[a].ColumnName =
+				        (string) _xlWorkSheet.Cells[Convert.ToInt32(ColumnHeaderStart.Text.Trim()), a].Value2;
+		        }
+	        }
+
+	        if (_endColumn == 0)
+	        {
+		        MessageBox.Show(@"No Columns Found!");
+	        }
+	        else
+	        {
+		        reportingToolStripMenuItem.Enabled = true;
+		        EnabledCheckBox.Enabled = true;
+		        try
+		        {
+			        HeaderList.SelectedIndex = 0;
+		        }
+		        catch
+		        {
+			        MessageBox.Show(@"Loading Failed");
+		        }
+
+		        ColumnnHeaderEnd.Text = _endColumn.ToString();
+	        }
+
+	        StatusLabel.Text = @"Detecting Last Row...";
+	        _foundLastRow = _xlWorkSheet.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing).Row;
+	        ColumnRules.SetLastDetectedRow(_foundLastRow);
+	        LastRow.Text = ColumnRules.ReturnLastDetectedRow().ToString();
+        }
+
+        private List<string> FindWorksheets()
+        {
+	        List<string> headers = new List<string>();
+	        StatusLabel.Text = @"Connecting to Worksheet...";
+	        StatusLabel.Text = @"Adding Worksheets...";
+	        foreach (Worksheet worksheet in XlWorkBook.Worksheets)
+	        {
+		        SheetComboBox.Items.Add(worksheet.Name);
+		        headers.Add(worksheet.Name);
+	        }
+	        PickSheet sheet = new PickSheet(0, headers);
+	        int sheetSelected = sheet.ShowDialog() == DialogResult.OK ? sheet.SheetIndexSelected : 0;
+	        _xlWorkSheet = (Worksheet) XlWorkBook.Worksheets.Item[sheetSelected + 1];
+	        SheetComboBox.SelectedIndex = sheetSelected;
+	        
+	        return headers;
+        }
+
+        private void SetRowColumnText()
+        {
+	        //TODO Review sets up default row and column text box to 1
+	        // why not use the use range for this? looks like this should only be set if no value is already in there
+	        ColumnHeaderStart.Text = @"1";
+	        RowHeaderStart.Text = @"1";
+        }
+
+        private bool TryOpenExcel()
+        {
+	        try
+	        {
+		        openExcelFileDialog.ShowDialog();
+		        StatusLabel.Text = @"Initialising Excel Engine...";
+		        XlWorkBook = _xlApp.Workbooks.Open(Filename: openExcelFileDialog.FileName, Notify: true,
+			        UpdateLinks: updateLinksOnOpenToolStripMenuItem.Checked);
+	        }
+	        catch (Exception exception)
+	        {
+		        MessageBox.Show(exception.Message);
+		        return true;
+	        }
+
+	        return false;
+        }
 
         private void releaseObject(object obj)
         {   try
-            {	System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+            {	Marshal.ReleaseComObject(obj);
                 obj = null;		}
             catch (Exception ex)
             {   obj = null;
-                MessageBox.Show("Unable to release the Object " + ex.ToString());	}
+                MessageBox.Show($@"Unable to release the Object {ex.Message}");	}
             finally
             {	GC.Collect();	}
         }
 
-        public void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {   try {
-				xlWorkBook.Close(true, openExcelFileDialog.FileName, null);
-				xlApp.Quit();
-				releaseObject(xlWorkSheet);
-				releaseObject(xlWorkBook);
-				releaseObject(xlApp);
-			} catch { MessageBox.Show("Save Cancelled"); }
+				XlWorkBook.Close(true, openExcelFileDialog.FileName);
+				_xlApp.Quit();
+				releaseObject(_xlWorkSheet);
+				releaseObject(XlWorkBook);
+				releaseObject(_xlApp);
+			} catch { MessageBox.Show(@"Save Cancelled"); }
 		
         }
 
@@ -186,15 +248,15 @@ namespace SpreadCheck
 			MoreThanNumber.Enabled = MoreThanCheckBox.Checked;
 			LessThanNumber.Enabled = lessThanCheckBox.Checked;
 
-			int EnabledCount = 0;  //should probably have made this a method.
-			for (int CountEnabled = 0; CountEnabled < endcolumn; CountEnabled++)
+			int enabledCount = 0;  //should probably have made this a method.
+			for (int countEnabled = 0; countEnabled < _endColumn; countEnabled++)
 			{
-				if (RuleList [CountEnabled].Enabled) { EnabledCount++; }
+				if (RuleList [countEnabled].Enabled) { enabledCount++; }
 			}
-				int CellCount = (EnabledCount * foundLastRow);
-				StatLabel.Text = EnabledCount.ToString() + " RuleSets Enabled " + CellCount.ToString() + " Cells" ;
+			int cellCount = (enabledCount * _foundLastRow);
+			StatLabel.Text = $@"{enabledCount.ToString()} RuleSets Enabled {cellCount.ToString()} Cells" ;
 
-			if (EnabledCount > 0) RunButton.Enabled = true; else RunButton.Enabled = false;
+			if (enabledCount > 0) RunButton.Enabled = true; else RunButton.Enabled = false;
 
 		}
 
@@ -239,29 +301,29 @@ namespace SpreadCheck
                     AllowedItemsList.Items.Add(stItem);		}
             }
 
-			var ReturnCellType = xlWorkSheet.Cells [2, (HeaderList.SelectedIndex + 1)].Value;
+			var returnCellType = _xlWorkSheet.Cells [2, (HeaderList.SelectedIndex + 1)].Value;
 
-			if (ReturnCellType != null)
-			{	CellFormatLabel.Text = ReturnCellType.GetType().Name;
-				NumberFormatLabel.Text = xlWorkSheet.Cells [2, (HeaderList.SelectedIndex + 1)].NumberFormat.ToString();		}
+			if (returnCellType != null)
+			{	CellFormatLabel.Text = returnCellType.GetType().Name;
+				NumberFormatLabel.Text = _xlWorkSheet.Cells [2, (HeaderList.SelectedIndex + 1)].NumberFormat.ToString();		}
 			else
-			{	CellFormatLabel.Text = "NULL!";
-				NumberFormatLabel.Text = "NULL!";	}
+			{	CellFormatLabel.Text = @"NULL!";
+				NumberFormatLabel.Text = @"NULL!";	}
 
 			ChangeCaseCombo.Enabled = ChangeCaseCheckBox.Checked;
 			TextAlignmentList.Enabled = TextRealignCheckbox.Checked;
 			RulesGroupBox.Enabled = RuleList [HeaderList.SelectedIndex].Enabled;
 
-			int EnabledCount = 0;
+			int enabledCount = 0;
 		
-			for (int CountEnabled = 0; CountEnabled < endcolumn; CountEnabled++)
-			{	if (RuleList [CountEnabled].Enabled) { EnabledCount++; }
+			for (int countEnabled = 0; countEnabled < _endColumn; countEnabled++)
+			{	if (RuleList [countEnabled].Enabled) { enabledCount++; }
 			}
 		
-			int CellCount = (EnabledCount * foundLastRow);
-			StatLabel.Text = EnabledCount.ToString() + " RuleSets Enabled " + CellCount.ToString() + " Cells";
+			int cellCount = (enabledCount * _foundLastRow);
+			StatLabel.Text = $@"{enabledCount.ToString()} RuleSets Enabled {cellCount.ToString()} Cells";
 
-			if (EnabledCount > 0) RunButton.Enabled = true; else RunButton.Enabled = false;
+			if (enabledCount > 0) RunButton.Enabled = true; else RunButton.Enabled = false;
 		}
 
         private void ItemCheckTextBox_TextChanged(object sender, EventArgs e)
@@ -270,114 +332,130 @@ namespace SpreadCheck
          /*  ----------------RUN BUTTON!!! -------------  */
 
         private void RunButton_Click(object sender, EventArgs e)
-        {	StatusLabel.Text = "Running...";
-			Stopwatch sw = new Stopwatch();
-			TimeSpan time = new TimeSpan();
+        {	
+	        //TODO Work out why theres no errors showing in the test worksheet for blanks
+	        //TODO Last Column not working
+	        StatusLabel.Text = @"Running...";
+	        
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
 
-			sw.Start();
-            progress.Show();
-			
-			progress.RunProgress.Visible = true;
+			DisableOptions();
 
-			RulesGroupBox.Enabled = false;
-			HeaderList.Enabled = false;
-			RunButton.Enabled = false;
-			
-            var pos = new Position();
-            var Check = new RuleCheck(XlWorkSheet);
-            var xlFunc = new XLFunctions();
-            int EnabledCount = 0;
-			progress.RunProgress.Minimum = 0;
-         
-            for (int CountEnabled = 0; CountEnabled < endcolumn; CountEnabled++)
-            {  if (RuleList[CountEnabled].Enabled) { EnabledCount++; }
+			// ??
+			Position cellPosition = new Position();
+            RuleCheck check = new RuleCheck(XlWorkSheet);
+            XLFunctions xlFunc = new XLFunctions();
+            
+            int enabledRuleListCount = 0;
+            for (int ruleListIndex = 0; ruleListIndex < _endColumn; ruleListIndex++)
+            {  if (RuleList[ruleListIndex].Enabled) { enabledRuleListCount++; }
             }
 
-			progress.RunProgress.Maximum = foundLastRow  * EnabledCount;
-            Form1.Report.MakeHeaders(xlWorkSheet, Convert.ToInt32(ColumnHeaderStart.Text.Trim()),(Convert.ToInt32(ColumnHeaderStart.Text.Trim()) + endcolumn), Convert.ToInt32(RowHeaderStart.Text.Trim()),RuleList);
-
-			for (int Row = Convert.ToInt32(RowHeaderStart.Text.Trim()) + 1; Row < ColumnRules.ReturnLastDetectedRow(); Row++) {
-				for (int Col = Convert.ToInt32(ColumnHeaderStart.Text.Trim()); Col < endcolumn; Col++) {
-					if (!rulesrunning) {
-						progress.StopButton.Visible = false;
-						
-						return;
-					}
+            SetUpProgressBar(enabledRuleListCount);
+            
+			// Converting user input string to number
+			int columnStart = Convert.ToInt32(ColumnHeaderStart.Text.Trim());
+			int rowStart = Convert.ToInt32(RowHeaderStart.Text.Trim());
+			int columnEnd = columnStart + _endColumn;
+            Report.MakeHeaders(_xlWorkSheet, columnStart, columnEnd, rowStart, RuleList);
+            
+			for (int row = rowStart + 1; row < _foundLastRow; row++) {
+				for (int column = columnStart; column < _endColumn; column++)
+				{
+					if (IsStopped()) return;
 					try {
-						if (RuleList [Col - 1].Enabled)  //If a rule is enabled, begin processing
-						{	pos.Col = Col; pos.Row = Row;
-							progress.RowCheckLabel.Text = "Row:" + Row.ToString();
-							progress.ColumnCheckLabel.Text = "Column:" + Col.ToString();
+						if (RuleList [column - 1].Enabled)  //If a rule is enabled, begin processing
+						{	cellPosition.Col = column; cellPosition.Row = row;
 
-							if (RuleList [Col - 1].IsEmpty)  //Check for empty cell
-							{ Check.CheckifEmpty(xlWorkSheet.Cells [Row, Col].Value2, pos); }
-							if (RuleList [Col - 1].CheckLength) { Check.CheckLength(Cell: xlWorkSheet.Cells [Row, Col].Value, pos: pos, Length: RuleList [Col - 1].Length); }
-							if (RuleList [Col - 1].ContainsSpaces) { Check.CheckForSpaces(xlWorkSheet.Cells [Row, Col].Value, pos); }
-							if (RuleList [Col - 1].ContainsNumber) { Check.CheckForNumbers(XlWorkSheet.Cells [Row, Col].Value, pos); }
-							if (RuleList [Col - 1].AllowValuesEnabled) { Check.CheckifListEqual(xlWorkSheet.Cells [Row, Col].Value, pos, RuleList [Col - 1].AllowedValuesArray); }
-							if (RuleList [Col - 1].ContainsNonAlpha) { Check.CheckForNonAlpha(xlWorkSheet.Cells [Row, Col].Value, pos); }
-							if (RuleList [Col - 1].ContainsLetters) { Check.CheckForLetter(xlWorkSheet.Cells [Row, Col].Value, pos); }
-							if (RuleList [Col - 1].CheckMustBeginWith) { Check.CheckBeginsWith(xlWorkSheet.Cells [Row, Col].Value, pos, RuleList [Col - 1].MustBeginWith); }
-							if (RuleList [Col - 1].CheckMustEndWith) { Check.CheckEndsWith(xlWorkSheet.Cells [Row, Col].Value, pos, RuleList [Col - 1].MustEndWith); }
-							if (RuleList [Col - 1].ChangeCaseEnabled) { xlWorkSheet.Cells [Row, Col].Value2 = xlFunc.ChangeCase(xlWorkSheet.Cells [Row, Col].Value, RuleList [Col - 1].ChangeCaseType); }
-							if (RuleList [Col - 1].TrimCell) { xlWorkSheet.Cells [Row, Col].Value = xlFunc.TrimCell(xlWorkSheet.Cells [Row, Col].Value); }
-							if (RuleList [Col - 1].ReverseData) { xlWorkSheet.Cells [Row, Col].Value = xlFunc.ReverseCell(xlWorkSheet.Cells [Row, Col].Value); }
-							if (RuleList[Col - 1].CheckMoreThan) { Check.CheckNumber(XlWorkSheet.Cells [Row, Col].Value, pos, RuleList [Col - 1].MoreThanValue, true); }
-							if (RuleList [Col - 1].CheckLessThan) { Check.CheckNumber(XlWorkSheet.Cells [Row, Col].Value, pos, RuleList [Col - 1].LessThanValue, false); }
+							check.ApplyRulesToCell( cellPosition, xlFunc, _xlWorkSheet.Cells[row, column], RuleList[column -1]);
 
-							if (progress.RunProgress.Value < progress.RunProgress.Maximum)
-								progress.RunProgress.Value++;
-							progress.ErrorsFoundLabel.Text = "Errors Found:" + Report.GetErrorNumbers().ToString();
-							time = TimeSpan.FromMilliseconds(sw.ElapsedMilliseconds);
-							string answer = string.Format("{0:D2}h:{1:D2}m:{2:D2}s", time.Hours, time.Minutes, time.Seconds);
-							progress.ElapsedLabel.Text = "Time Elapsed:" + answer;
-							progress.FunctionsRunLabel.Text = "Functions Run:" + xlFunc.FunctionCallCount.ToString();
-
-							Application.DoEvents();
+							UpdateProgressInfo(row, column, stopwatch, xlFunc);
 						}
 					} catch (Exception ex){ MessageBox.Show(ex.ToString()); }
 				}
 			}
 
-			Form1.Report.CleanUpReport();
-			progress.StopButton.Visible = false;
+			Report.CleanUpReport();
+			_progress.StopButton.Visible = false;
 			
-			StatusLabel.Text = "Complete!...";
+			StatusLabel.Text = @"Complete!...";
         }
 
-        private void Button2_Click_1(object sender, EventArgs e)
+        
+
+        private void UpdateProgressInfo(int row, int column, Stopwatch stopwatch, XLFunctions xlFunc)
+        {
+	        _progress.RowCheckLabel.Text = @"Row:" + row;
+	        _progress.ColumnCheckLabel.Text = @"Column:" + column;
+	        if (_progress.RunProgress.Value < _progress.RunProgress.Maximum)
+		        _progress.RunProgress.Value++;
+	        _progress.ErrorsFoundLabel.Text = @"Errors Found:" + Report.GetErrorNumbers();
+	        var time = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
+	        string answer = $"{time.Hours:D2}h:{time.Minutes:D2}m:{time.Seconds:D2}s";
+	        _progress.ElapsedLabel.Text = $@"Time Elapsed:{answer}";
+	        _progress.FunctionsRunLabel.Text = $@"Functions Run:{xlFunc.FunctionCallCount.ToString()}";
+	        System.Windows.Forms.Application.DoEvents();
+        }
+
+        private bool IsStopped()
+        {
+	        if (!RulesRunning)
+	        {
+		        _progress.StopButton.Visible = false;
+		        return true;
+	        }
+
+	        return false;
+        }
+
+        private void DisableOptions()
+        {
+	        RulesGroupBox.Enabled = false;
+	        HeaderList.Enabled = false;
+	        RunButton.Enabled = false;
+        }
+
+        private void SetUpProgressBar(int enabledRuleListCount)
+        {
+	        //TODO Fix progress metre and make more obvious function complete
+	        _progress.Show();
+	        _progress.RunProgress.Visible = true;
+	        _progress.RunProgress.Minimum = 0;
+	        // Set progress by number of rows x columns with enabled rule lists
+	        _progress.RunProgress.Maximum = _foundLastRow  * enabledRuleListCount;
+        }
+
+        private void RemoveItemButton_Click_1(object sender, EventArgs e)
         {	try
 			{	AllowedItemsList.Items.RemoveAt(AllowedItemsList.SelectedIndex);
-				int b= 0;
-
-				foreach (string Array in RuleList [HeaderList.SelectedIndex].AllowedValuesArray)
-				{	RuleList [HeaderList.SelectedIndex].AllowedValuesArray [b] = "";
-					b++;		}
-                int a= 0;
-
-				foreach (var ListBoxItem in AllowedItemsList.Items)
-				{	RuleList [HeaderList.SelectedIndex].AllowedValuesArray [a] = AllowedItemsList.Items [a].ToString();
-					a++;		}
-			}	catch { };
+				for (int b= 0; b < RuleList [HeaderList.SelectedIndex].AllowedValuesArray.Count; b++)
+				{	RuleList [HeaderList.SelectedIndex].AllowedValuesArray [b] = ""; }
+				for (int a= 0; a < AllowedItemsList.Items.Count; a++)
+				{	RuleList [HeaderList.SelectedIndex].AllowedValuesArray [a] = AllowedItemsList.Items [a].ToString(); }
+			}
+	        catch
+	        { /* ignored */ }
         }
 
         private void RowHeaderStart_Click(object sender, EventArgs e)
         {       }
 
-        private void button3_Click(object sender, EventArgs e)
-        { dateTimeForm.ShowDialog(); }
+        private void DateTimeSettingsButton_Click(object sender, EventArgs e)
+        { _dateTimeForm.ShowDialog(); }
 
-        private void ChangeCaseCombo_ControlAdded(object sender, ControlEventArgs e)
-        { ChangeCaseCombo.SelectedIndex = 1;}
+        // private void ChangeCaseCombo_ControlAdded(object sender, ControlEventArgs e)
+        // { ChangeCaseCombo.SelectedIndex = 1;}
 
 		private void reportingToolStripMenuItem_Click(object sender, EventArgs e)
-		{ reportForm.ShowDialog();}
+		{ _reportForm.ShowDialog();}
 
 		private void RulesGroupBox_Enter(object sender, EventArgs e)
 		{		}
 
 		private void Form1_Load(object sender, EventArgs e)
-		{	foreach( string strNumberFormat in Enum.GetNames(typeof(Excel.XlListDataType)))
+		{	
+			foreach( string strNumberFormat in Enum.GetNames(typeof(XlListDataType)))
 			{	NumberFormatCombo.Items.Add(strNumberFormat);	}
 		}
 
@@ -385,54 +463,53 @@ namespace SpreadCheck
 		{		}
 
 		private void enableAllRuleSetsToolStripMenuItem_Click(object sender, EventArgs e)
-		{	int i = 0;
-			foreach (string  str in HeaderList.Items)
-			{	RuleList [i].Enabled = true; i++;}
+		{	
+			for (int i = 0; i < HeaderList.Items.Count; i++)
+			{	RuleList [i].Enabled = true;}
 			HeaderList_SelectedIndexChanged(sender,e);
 		}
 
 		private void disableAllRuleSetsToolStripMenuItem_Click(object sender, EventArgs e)
-		{	int i = 0;
-			foreach (string str in HeaderList.Items)
-			{	RuleList [i].Enabled = false;	i++;}
+		{	
+			for (int i = 0; i < HeaderList.Items.Count; i++)
+			{	RuleList [i].Enabled = false;}
 			HeaderList_SelectedIndexChanged(sender, e);
 		}
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{	Form1_FormClosing(sender, null);	}
 
-		private void SaveExitButton_Click(object sender, EventArgs e)
-		{	Form1_FormClosing(sender, null);	}
-
-		public void StopButton_Click(object sender, EventArgs e)
-		{ rulesrunning = false;	}
+		// private void SaveExitButton_Click(object sender, EventArgs e)
+		// {	Form1_FormClosing(sender, null);	}
+		//
+		// public void StopButton_Click(object sender, EventArgs e)
+		// { RulesRunning = false;	}
 		
 		public void SaveSettings(string path) /* --- save settings! ---*/
 		{	try {
-				string onlyFileName = System.IO.Path.GetFileNameWithoutExtension(path);
-				onlyFileName = onlyFileName + ".dat";
+				string onlyFileName = $"{Path.GetFileNameWithoutExtension(path)}.dat";
 				FileInfo f = new FileInfo(path);
 				using (BinaryWriter bw = new BinaryWriter(f.OpenWrite())) {
-					StatusLabel.Text = "Saving Column / Row Position Data.... ";
+					StatusLabel.Text = @"Saving Column / Row Position Data.... ";
 					bw.Write(ColumnHeaderStart.Text);
 					bw.Write(RowHeaderStart.Text);
-					StatusLabel.Text = "Saving Error Strings.... ";
-					bw.Write((long)RuleCheck.err.BackCellColor);
-					bw.Write(RuleCheck.err.EmptyError);
-					bw.Write(RuleCheck.err.SpacesError);
-					bw.Write(RuleCheck.err.NonAlpaError);
-					bw.Write(RuleCheck.err.IfNumbersError);
-					bw.Write(RuleCheck.err.IfLettersError);
-					bw.Write(RuleCheck.err.MustBeginWithError);
-					bw.Write(RuleCheck.err.MustEndWithError);
-					bw.Write(RuleCheck.err.MustHaveLenghtError);
-					bw.Write(RuleCheck.err.AllowedItemsListError);
-					bw.Write(RuleCheck.err.IfMoreThanError);
-					bw.Write(RuleCheck.err.IfLessThanError);
-					bw.Write(RuleCheck.err.StringEqual);
-					bw.Write(RuleCheck.err.CellNull);
-					bw.Write(RuleCheck.err.UnexpectedDataTypeError);
-					bw.Write(RuleCheck.err.BackCellColor.ToString());
+					StatusLabel.Text = @"Saving Error Strings.... ";
+					bw.Write((long)RuleCheck.Err.BackCellColor);
+					bw.Write(RuleCheck.Err.EmptyError);
+					bw.Write(RuleCheck.Err.SpacesError);
+					bw.Write(RuleCheck.Err.NonAlpaError);
+					bw.Write(RuleCheck.Err.IfNumbersError);
+					bw.Write(RuleCheck.Err.IfLettersError);
+					bw.Write(RuleCheck.Err.MustBeginWithError);
+					bw.Write(RuleCheck.Err.MustEndWithError);
+					bw.Write(RuleCheck.Err.MustHaveLenghtError);
+					bw.Write(RuleCheck.Err.AllowedItemsListError);
+					bw.Write(RuleCheck.Err.IfMoreThanError);
+					bw.Write(RuleCheck.Err.IfLessThanError);
+					bw.Write(RuleCheck.Err.StringEqual);
+					bw.Write(RuleCheck.Err.CellNull);
+					bw.Write(RuleCheck.Err.UnexpectedDataTypeError);
+					bw.Write(RuleCheck.Err.BackCellColor.ToString());
 					bw.Write(Report.IncludeHyperLink);
 					bw.Write(Report.IncludeOriginalData);
 					bw.Write(Report.IncludeEnabledData);
@@ -440,10 +517,10 @@ namespace SpreadCheck
 					bw.Write(Report.IncludePivotTable);
 					bw.Write(Report.ReportNull);
 					bw.Write(Report.ReportXData);
-					bw.Write(endcolumn);
+					bw.Write(_endColumn);
 
-					for (int a = 0; a < endcolumn; a++) {
-						StatusLabel.Text = "Saving.... " + RuleList [a].ColumnName;
+					for (int a = 0; a < _endColumn; a++) {
+						StatusLabel.Text = $@"Saving.... {RuleList [a].ColumnName}";
 						bw.Write(RuleList [a].IsEmpty);
 						bw.Write(RuleList [a].ContainsSpaces);
 						bw.Write(RuleList [a].ContainsNumber);
@@ -483,36 +560,36 @@ namespace SpreadCheck
 							}
 						}
 					}
-					StatusLabel.Text = "Idle.... ";
+					StatusLabel.Text = @"Idle.... ";
 				}
-			} catch { };
+			}
+			catch { /* ignored */ }
 		}
 
-		public void LoadSettings (string path)
+		private void LoadSettings (string path)
 		{	try {
-				string onlyFileName = System.IO.Path.GetFileNameWithoutExtension(path);
-				onlyFileName = onlyFileName + ".dat";
+				string onlyFileName = $"{Path.GetFileNameWithoutExtension(path)}.dat";
 				FileInfo f = new FileInfo(path);
 				using (BinaryReader br = new BinaryReader(f.OpenRead())) {
 					ColumnHeaderStart.Text=br.ReadString();
 					RowHeaderStart.Text = br.ReadString();
-					StatusLabel.Text = "Loading Error Strings.... ";
-					RuleCheck.err.BackCellColor = (Excel.XlRgbColor)br.ReadInt64();
-					RuleCheck.err.EmptyError = br.ReadString();
-					RuleCheck.err.SpacesError = br.ReadString();
-					RuleCheck.err.NonAlpaError = br.ReadString();
-					RuleCheck.err.IfNumbersError = br.ReadString();
-					RuleCheck.err.IfLettersError = br.ReadString();
-					RuleCheck.err.MustBeginWithError = br.ReadString();
-					RuleCheck.err.MustEndWithError = br.ReadString();
-					RuleCheck.err.MustHaveLenghtError = br.ReadString();
-					RuleCheck.err.AllowedItemsListError = br.ReadString();
-					RuleCheck.err.IfMoreThanError = br.ReadString();
-					RuleCheck.err.IfLessThanError = br.ReadString();
-					RuleCheck.err.StringEqual = br.ReadString();
-					RuleCheck.err.CellNull = br.ReadString();
-					RuleCheck.err.UnexpectedDataTypeError = br.ReadString();
-					RuleCheck.err.BackCellColor = (Excel.XlRgbColor)Enum.Parse(typeof(Excel.XlRgbColor), br.ReadString());
+					StatusLabel.Text = @"Loading Error Strings.... ";
+					RuleCheck.Err.BackCellColor = (XlRgbColor)br.ReadInt64();
+					RuleCheck.Err.EmptyError = br.ReadString();
+					RuleCheck.Err.SpacesError = br.ReadString();
+					RuleCheck.Err.NonAlpaError = br.ReadString();
+					RuleCheck.Err.IfNumbersError = br.ReadString();
+					RuleCheck.Err.IfLettersError = br.ReadString();
+					RuleCheck.Err.MustBeginWithError = br.ReadString();
+					RuleCheck.Err.MustEndWithError = br.ReadString();
+					RuleCheck.Err.MustHaveLenghtError = br.ReadString();
+					RuleCheck.Err.AllowedItemsListError = br.ReadString();
+					RuleCheck.Err.IfMoreThanError = br.ReadString();
+					RuleCheck.Err.IfLessThanError = br.ReadString();
+					RuleCheck.Err.StringEqual = br.ReadString();
+					RuleCheck.Err.CellNull = br.ReadString();
+					RuleCheck.Err.UnexpectedDataTypeError = br.ReadString();
+					RuleCheck.Err.BackCellColor = (XlRgbColor)Enum.Parse(typeof(XlRgbColor), br.ReadString());
 
 					Report.IncludeHyperLink = br.ReadBoolean();
 					Report.IncludeOriginalData = br.ReadBoolean();
@@ -521,10 +598,10 @@ namespace SpreadCheck
 					Report.IncludePivotTable = br.ReadBoolean();
 					Report.ReportNull = br.ReadBoolean();
 					Report.ReportXData = br.ReadBoolean();
-					endcolumn = br.ReadInt32();
+					_endColumn = br.ReadInt32();
 
-					for (int a = 0; a < endcolumn; a++) {
-						StatusLabel.Text = "Loading Column .... ";
+					for (int a = 0; a < _endColumn; a++) {
+						StatusLabel.Text = @"Loading Column .... ";
 						RuleList [a].IsEmpty = br.ReadBoolean();
 						RuleList [a].ContainsSpaces = br.ReadBoolean();
 						RuleList [a].ContainsNumber = br.ReadBoolean();
@@ -558,46 +635,50 @@ namespace SpreadCheck
 						RuleList [a].ChangeTextAlignment = br.ReadBoolean();
 						RuleList [a].TextAlignmentType = br.ReadInt32();
 						RuleList [a].BackColorEnabled = br.ReadBoolean();
-						int tempcount = br.ReadInt32();
+						int tempCount = br.ReadInt32();
 						RuleList [a].AllowedValuesArray = new List<string>();
-						for (a = 0; a == tempcount; a++) { RuleList [a].AllowedValuesArray.Add(br.ReadString()); }
+						for (a = 0; a == tempCount; a++) { RuleList [a].AllowedValuesArray.Add(br.ReadString()); }
 
 					}
 				}
-			} catch (Exception Ex){ MessageBox.Show(@"Error Loading Settings.. Possible Mismatch:= "+ Ex.ToString()); }
-				StatusLabel.Text = "Idle.... ";
-			try { HeaderList.SelectedIndex = 0; } catch { MessageBox.Show("Unable to Select Column"); }
+			} catch (Exception ex){ MessageBox.Show($@"Error Loading Settings.. Possible Mismatch:= {ex.Message}");}
+			StatusLabel.Text = @"Idle.... ";
+			try { HeaderList.SelectedIndex = 0; } catch { MessageBox.Show(@"Unable to Select Column"); }
 		}
 
 
 		private void saveRuleSetsToolStripMenuItem_Click(object sender, EventArgs e)
-		{	saveSettingsDialog.InitialDirectory = Path.GetDirectoryName(Application.ExecutablePath);
-			StatusLabel.Text = "Saving RuleSets.... ";
-			try { saveSettingsDialog.ShowDialog(); } catch { };
+		{	saveSettingsDialog.InitialDirectory = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+			StatusLabel.Text = @"Saving RuleSets.... ";
+			try { saveSettingsDialog.ShowDialog(); }
+			catch
+			{ /* ignored */}
 			SaveSettings(saveFileDialog.FileName);
 
-			StatusLabel.Text = "Idle.... ";
+			StatusLabel.Text = @"Idle.... ";
 		}
 
 		private void loadRuleSetsToolStripMenuItem_Click(object sender, EventArgs e)
-		{	StatusLabel.Text = "Loading RuleSets.... ";
-			try { openSettingsDialog.ShowDialog(); } catch { }
+		{	StatusLabel.Text = @"Loading RuleSets.... ";
+			try { openSettingsDialog.ShowDialog(); }
+			catch { /* ignored */ }
+
 			LoadSettings(openSettingsDialog.FileName);
-				StatusLabel.Text = "Idle.... ";
+				StatusLabel.Text = @"Idle.... ";
 		}
 
 		private void previewColumnDataToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PreviewData pForm = new PreviewData(xlWorkBook, xlWorkSheet, Convert.ToInt32(LastRow.Text),HeaderList.SelectedIndex);
+			PreviewData pForm = new PreviewData(XlWorkBook, Convert.ToInt32(LastRow.Text),HeaderList.SelectedIndex);
 			
 			pForm.ShowDialog();
 		}
 
 		private void updateLinksOnOpenToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.updateLinksOnOpenToolStripMenuItem.Checked == true)
-				this.updateLinksOnOpenToolStripMenuItem.Checked = false; 
-			else this.updateLinksOnOpenToolStripMenuItem.Checked = true;
+			if (updateLinksOnOpenToolStripMenuItem.Checked)
+				updateLinksOnOpenToolStripMenuItem.Checked = false; 
+			else updateLinksOnOpenToolStripMenuItem.Checked = true;
 
 		}
 	}

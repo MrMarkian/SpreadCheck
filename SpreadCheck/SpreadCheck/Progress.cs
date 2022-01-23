@@ -13,7 +13,7 @@ namespace SpreadCheck
 		{	InitializeComponent();
 		}
 		private void StopButton_Click(object sender, EventArgs e)
-		{	Form1.rulesrunning = false;
+		{	Form1.RulesRunning = false;
 		}
 
 	}
