@@ -361,7 +361,7 @@ namespace SpreadCheck
             Report.MakeHeaders(_xlWorkSheet, columnStart, columnEnd, rowStart, RuleList);
             
 	        // TODO work out. Why does ColumnRules have last detected row?
-			for (int row = rowStart + 1; row < ColumnRules.ReturnLastDetectedRow(); row++) {
+			for (int row = rowStart + 1; row < _foundLastRow; row++) {
 				for (int column = columnStart; column < _endColumn; column++)
 				{
 					if (IsStopped()) return;
