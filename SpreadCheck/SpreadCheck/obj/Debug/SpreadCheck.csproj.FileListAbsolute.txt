@@ -59,3 +59,4 @@ C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\Sprea
 C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.ReportingOptions.resources
 C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.GenerateResource.cache
 C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.csproj.CoreCompileInputs.cache
+C:\Users\Sarah Rawlinson\Documents\GitHub\RPG Course 2nd Start\SpreadCheck\SpreadCheck\SpreadCheck\obj\Debug\SpreadCheck.PickSheet.resources

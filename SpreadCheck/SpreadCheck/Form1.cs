@@ -70,20 +70,18 @@ namespace SpreadCheck
 
             if (TryOpenExcel()) return;
             SetRowColumnText();
-            FindWorksheets();
-
+            List<string> headers = FindWorksheets();
             WorkOutWorkBookRange(MaxCount);
             Array.Resize(ref RuleList, _endColumn);
 
             StatusLabel.Text = @"Creating Report Sheet...";
             colrowlabel.Text = $@"C:{_endColumn.ToString()}R:{_foundLastRow.ToString()}";
 
-            //TODO Check if Error Sheet Exists
-            Report = new Reporter(XlWorkBook, _xlWorkSheet, _endColumn);
+            Report = new Reporter(XlWorkBook, _xlWorkSheet, _endColumn, headers);
            
 			Text = $@"SpreadChecker - {openExcelFileDialog.SafeFileName}";
 
-			//Check for existing settings... 
+			
 
 			string fullPath =
 				$@"{Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath)}\{Path.GetFileNameWithoutExtension(openExcelFileDialog.FileName)}.dat";
@@ -148,20 +146,22 @@ namespace SpreadCheck
 	        LastRow.Text = ColumnRules.ReturnLastDetectedRow().ToString();
         }
 
-        private void FindWorksheets()
+        private List<string> FindWorksheets()
         {
+	        List<string> headers = new List<string>();
 	        StatusLabel.Text = @"Connecting to Worksheet...";
-	        //TODO only uses first tab needs tab option
-	        _xlWorkSheet = (Worksheet) XlWorkBook.Worksheets.Item[1];
-
-	        //TODO nothing using these worksheets, would be good to choose
 	        StatusLabel.Text = @"Adding Worksheets...";
 	        foreach (Worksheet worksheet in XlWorkBook.Worksheets)
 	        {
 		        SheetComboBox.Items.Add(worksheet.Name);
+		        headers.Add(worksheet.Name);
 	        }
-
-	        SheetComboBox.SelectedIndex = 0;
+	        PickSheet sheet = new PickSheet(0, headers);
+	        int sheetSelected = sheet.ShowDialog() == DialogResult.OK ? sheet.SheetIndexSelected : 0;
+	        _xlWorkSheet = (Worksheet) XlWorkBook.Worksheets.Item[sheetSelected + 1];
+	        SheetComboBox.SelectedIndex = sheetSelected;
+	        
+	        return headers;
         }
 
         private void SetRowColumnText()
@@ -201,7 +201,7 @@ namespace SpreadCheck
             {	GC.Collect();	}
         }
 
-        public void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {   try {
 				XlWorkBook.Close(true, openExcelFileDialog.FileName);
 				_xlApp.Quit();
