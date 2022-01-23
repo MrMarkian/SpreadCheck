@@ -360,7 +360,6 @@ namespace SpreadCheck
 			int columnEnd = columnStart + _endColumn;
             Report.MakeHeaders(_xlWorkSheet, columnStart, columnEnd, rowStart, RuleList);
             
-	        // TODO work out. Why does ColumnRules have last detected row?
 			for (int row = rowStart + 1; row < _foundLastRow; row++) {
 				for (int column = columnStart; column < _endColumn; column++)
 				{
@@ -369,7 +368,7 @@ namespace SpreadCheck
 						if (RuleList [column - 1].Enabled)  //If a rule is enabled, begin processing
 						{	cellPosition.Col = column; cellPosition.Row = row;
 
-							check.ApplyRulesToCell( cellPosition, xlFunc, _xlWorkSheet.Cells[row, column], RuleList[column]);
+							check.ApplyRulesToCell( cellPosition, xlFunc, _xlWorkSheet.Cells[row, column], RuleList[column -1]);
 
 							UpdateProgressInfo(row, column, stopwatch, xlFunc);
 						}

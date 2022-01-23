@@ -53,8 +53,8 @@ namespace SpreadCheck
 					}
 
 				case null:
-					if (Form1.Report.ReportNull)
-						Form1.Report.Add(
+					// if (Form1.Report.ReportNull)
+					Form1.Report.Add(
 							pos.Col, pos.Row, Err.CellNull, 1, 0, _currentSheet);
 					break;
 				default:
@@ -72,20 +72,41 @@ namespace SpreadCheck
 				case string stringValue:
 					if (stringValue.Any(char.IsNumber)) 
 						Form1.Report.Add(
-							pos.Col, pos.Row, $"{Err.IfNumbersError} -String", "String", 
+							pos.Col, pos.Row, $"{Err.IfNumbersError} -String", "non-numeric", 
 							stringValue, _currentSheet);
 					return true;
 				case null:
-				if (Form1.Report.ReportNull)
-					Form1.Report.Add(pos.Col, pos.Row, Err.CellNull, "A-Z", "NULL", _currentSheet);
-				break;
+					if (Form1.Report.ReportNull)
+						Form1.Report.Add(pos.Col, pos.Row, Err.CellNull, "A-Z", "NULL", _currentSheet);
+					break;
+				case int intValue:
+					Form1.Report.Add(
+						pos.Col, pos.Row, $"{Err.IfNumbersError} -String", "non-numeric", 
+						cell.GetType().ToString(), _currentSheet);
+					break;
+				case float floatValue:
+					Form1.Report.Add(
+						pos.Col, pos.Row, $"{Err.IfNumbersError} -String", "non-numeric", 
+						cell.GetType().ToString(), _currentSheet);
+					break;
+				case long longValue:
+					Form1.Report.Add(
+						pos.Col, pos.Row, $"{Err.IfNumbersError} -String", "non-numeric", 
+						cell.GetType().ToString(), _currentSheet);
+					break;
+				case double doubleValue:
+					Form1.Report.Add(
+						pos.Col, pos.Row, $"{Err.IfNumbersError} -String", "non-numeric", 
+						cell.GetType().ToString(), _currentSheet);
+					break;
+				
 
 				default:
-				if (Form1.Report.ReportXData)
-					Form1.Report.Add(
-						pos.Col, pos.Row, Err.UnexpectedDataTypeError, "A-Z", 
-						cell.GetType().ToString(), _currentSheet);
-				break;
+					if (Form1.Report.ReportXData)
+						Form1.Report.Add(
+							pos.Col, pos.Row, Err.UnexpectedDataTypeError, "A-Z", 
+							cell.GetType().ToString(), _currentSheet);
+					break;
 			}
 			return false;
         }
@@ -149,8 +170,10 @@ namespace SpreadCheck
 							Form1.Report.Add(
 								pos.Col, pos.Row, Err.NonAlpaError, "A-Z / 0-9", 
 								stringValue, _currentSheet);
+							break;
 						}
-					} return true;
+					} 
+					return true;
 
 				case null:
 					if(Form1.Report.ReportNull)
