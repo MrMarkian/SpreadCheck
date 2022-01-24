@@ -213,7 +213,9 @@ namespace SpreadCheck
         }
 
         private void CheckedChanged(object sender, EventArgs e)
-        {   if (sender == WarnIfEmpty) { RuleList[HeaderList.SelectedIndex].IsEmpty = WarnIfEmpty.Checked; }
+        {   
+	        //TODO Add in check date time functionality 
+	        if (sender == WarnIfEmpty) { RuleList[HeaderList.SelectedIndex].IsEmpty = WarnIfEmpty.Checked; }
             if (sender == WarnIfContainsSpace) { RuleList[HeaderList.SelectedIndex].ContainsSpaces = WarnIfContainsSpace.Checked; }
             if (sender == IfNumbersCheckBox) { RuleList[HeaderList.SelectedIndex].ContainsNumber = IfNumbersCheckBox.Checked; }
             if (sender == IfLettersCheckBox) { RuleList[HeaderList.SelectedIndex].ContainsLetters = IfLettersCheckBox.Checked; }
@@ -237,12 +239,12 @@ namespace SpreadCheck
             if (sender == ColorCellCheckBox) { RuleList [HeaderList.SelectedIndex].BackColorEnabled = ColorCellCheckBox.Checked; }
 			if (sender == TextRealignCheckbox) { RuleList [HeaderList.SelectedIndex].ChangeTextAlignment = TextRealignCheckbox.Checked; }
 			if (sender == TextAlignmentList) { RuleList [HeaderList.SelectedIndex].TextAlignmentType = TextAlignmentList.SelectedIndex; }
+			if (sender == CheckDateTimeCheckBox) { RuleList [HeaderList.SelectedIndex].CheckDateTime = CheckDateTimeCheckBox.Checked; }
 
             EndWithTextBox.Enabled = MustEndWithCheckBox.Checked;
             BeginWithTextBox.Enabled = MustBeginWithCheckbox.Checked;
             LengthNumericUpDown.Enabled = LengthEnabledCheckbox.Checked;
-
-			ChangeCaseCombo.Enabled = ChangeCaseCheckBox.Checked;
+            ChangeCaseCombo.Enabled = ChangeCaseCheckBox.Checked;
 			TextAlignmentList.Enabled = TextRealignCheckbox.Checked;
 			RulesGroupBox.Enabled = EnabledCheckBox.Checked;
 			MoreThanNumber.Enabled = MoreThanCheckBox.Checked;
@@ -261,7 +263,9 @@ namespace SpreadCheck
 		}
 
         private void HeaderList_SelectedIndexChanged(object sender, EventArgs e)
-        {   WarnIfEmpty.Checked = RuleList[HeaderList.SelectedIndex].IsEmpty;
+        {   
+	        //TODO Add in check date time functionality 
+	        WarnIfEmpty.Checked = RuleList[HeaderList.SelectedIndex].IsEmpty;
             WarnIfContainsSpace.Checked = RuleList[HeaderList.SelectedIndex].ContainsSpaces;
             IfNumbersCheckBox.Checked = RuleList[HeaderList.SelectedIndex].ContainsNumber;
             IfLettersCheckBox.Checked = RuleList[HeaderList.SelectedIndex].ContainsLetters;
@@ -293,6 +297,8 @@ namespace SpreadCheck
 			ColorCellCheckBox.Checked = RuleList [HeaderList.SelectedIndex].BackColorEnabled;
 			TextRealignCheckbox.Checked = RuleList [HeaderList.SelectedIndex].ChangeTextAlignment;
 			TextAlignmentList.SelectedIndex = RuleList [HeaderList.SelectedIndex].TextAlignmentType;
+			CheckDateTimeCheckBox.Checked = RuleList [HeaderList.SelectedIndex].CheckDateTime;
+			
             AllowedItemsList.Items.Clear();
 
             if(RuleList[HeaderList.SelectedIndex].AllowedValuesArray != null)
@@ -332,9 +338,7 @@ namespace SpreadCheck
          /*  ----------------RUN BUTTON!!! -------------  */
 
         private void RunButton_Click(object sender, EventArgs e)
-        {	
-	        //TODO Work out why theres no errors showing in the test worksheet for blanks
-	        //TODO Last Column not working
+        {
 	        StatusLabel.Text = @"Running...";
 	        
 			Stopwatch stopwatch = new Stopwatch();
@@ -400,16 +404,6 @@ namespace SpreadCheck
 	        HeaderList.Enabled = false;
 	        RunButton.Enabled = false;
         }
-
-        // private void SetUpProgressBar(int enabledRuleListCount)
-        // {
-	       //  //TODO Fix progress metre and make more obvious function complete
-	       //  _progress.Show();
-	       //  _progress.RunProgress.Visible = true;
-	       //  _progress.RunProgress.Minimum = 0;
-	       //  // Set progress by number of rows x columns with enabled rule lists
-	       //  _progress.RunProgress.Maximum = _foundLastRow  * enabledRuleListCount;
-        // }
 
         private void RemoveItemButton_Click_1(object sender, EventArgs e)
         {	try

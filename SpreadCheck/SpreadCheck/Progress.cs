@@ -58,7 +58,6 @@ namespace SpreadCheck
 		
 		public void SetUpProgressBar(int enabledRuleListCount, int foundLastRow)
 		{
-			//TODO Fix progress metre and make more obvious function complete
 			Show();
 			RunProgress.Visible = true;
 			RunProgress.Minimum = 0;

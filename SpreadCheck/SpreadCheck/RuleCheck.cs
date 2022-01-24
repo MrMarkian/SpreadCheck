@@ -218,6 +218,7 @@ namespace SpreadCheck
 
 				case string stringValue:
 					//TODO Look into. Doesn't make sense i think this should check for a match not (not match)
+					//TODO add in option for exact char match or word match (Capitalized / Not Capitalized)
 					int errors = 0;
 					foreach (string str in allowedWords) 
 					{
@@ -231,11 +232,11 @@ namespace SpreadCheck
 					if (Form1.Report.ReportNull)
 						Form1.Report.Add(pos.Col, pos.Row, Err.CellNull, "Check List", 0, _currentSheet);
 					break;
-				// default:
-				// 	if (Form1.Report.ReportXData)
-				// 		Form1.Report.Add(pos.Col, pos.Row, Err.UnexpectedDataTypeError, "Check List", 
-				// 			cell.GetType().ToString(), _currentSheet);
-				// 	break;
+				default:
+					if (Form1.Report.ReportXData)
+						Form1.Report.Add(pos.Col, pos.Row, Err.UnexpectedDataTypeError, "Check List", 
+							cell.GetType().ToString(), _currentSheet);
+					break;
 			}
 			
             return true;

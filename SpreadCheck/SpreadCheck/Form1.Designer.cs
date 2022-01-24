@@ -480,6 +480,7 @@
 	        this.CheckDateTimeCheckBox.TabIndex = 21;
 	        this.CheckDateTimeCheckBox.Text = "Check Date / Time";
 	        this.CheckDateTimeCheckBox.UseVisualStyleBackColor = true;
+	        this.CheckDateTimeCheckBox.CheckedChanged += new System.EventHandler(this.CheckedChanged);
 	        // 
 	        // MustBeginWithCheckbox
 	        // 
@@ -1011,7 +1012,7 @@
 		private System.Windows.Forms.SaveFileDialog saveSettingsDialog;
 		private System.Windows.Forms.ToolStripMenuItem updateLinksOnOpenToolStripMenuItem;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.CheckBox CheckDateTimeCheckBox;
+        internal System.Windows.Forms.CheckBox CheckDateTimeCheckBox;
     }
 }
 
