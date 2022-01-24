@@ -11,9 +11,12 @@ This program is able to validate spreadsheet data for a set of conditions, and p
 - If a cell contains numbers
 - If a cell contains letters
 - Check Date & Time (incomplete)
-- If a cell begins with a certain character string
-- If a cell ends with a certain character string
-- Check for values in a list
+- If a cell begins with a certain character string (exact match only customisation planned)
+- If a cell ends with a certain character string (exact match only customisation planned)
+- Check length
+- Check for values in a list (exact match only customisation planned)
+- If more than (incomplete)
+- If less than (incomplete)
 
 # Program Features
 
@@ -24,10 +27,10 @@ This program is able to validate spreadsheet data for a set of conditions, and p
 * Reverse data within Cells
 * Save / Load of programmed verification checks. 
 * Fully configurable checks for each column of data within the spreadsheet
+* Multiple Sheet support
 
 # Future Updates
 
-- [ ] Multiple Sheet support
 - [ ] Attempting to auto-correct failed data
 - [ ] Drag / Drop & command line support
 - [ ] Inclusion of Pivot-Table within report.
