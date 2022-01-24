@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpreadCheck
 {
-	class XLFunctions
+	public class XLFunctions
 	{
 		public int FunctionCallCount;
 

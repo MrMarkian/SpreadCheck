@@ -352,7 +352,7 @@ namespace SpreadCheck
             {  if (RuleList[ruleListIndex].Enabled) { enabledRuleListCount++; }
             }
 
-            SetUpProgressBar(enabledRuleListCount);
+            _progress.SetUpProgressBar(enabledRuleListCount, _foundLastRow);
             
 			// Converting user input string to number
 			int columnStart = Convert.ToInt32(ColumnHeaderStart.Text.Trim());
@@ -370,33 +370,18 @@ namespace SpreadCheck
 
 							check.ApplyRulesToCell( cellPosition, xlFunc, _xlWorkSheet.Cells[row, column], RuleList[column -1]);
 
-							UpdateProgressInfo(row, column, stopwatch, xlFunc);
+							_progress.UpdateProgressInfo(row, column, stopwatch, xlFunc, Report.GetErrorNumbers());
 						}
 					} catch (Exception ex){ MessageBox.Show(ex.ToString()); }
 				}
 			}
 
 			Report.CleanUpReport();
-			_progress.StopButton.Visible = false;
+			_progress.ShowComplete();
 			
 			StatusLabel.Text = @"Complete!...";
         }
-
         
-
-        private void UpdateProgressInfo(int row, int column, Stopwatch stopwatch, XLFunctions xlFunc)
-        {
-	        _progress.RowCheckLabel.Text = @"Row:" + row;
-	        _progress.ColumnCheckLabel.Text = @"Column:" + column;
-	        if (_progress.RunProgress.Value < _progress.RunProgress.Maximum)
-		        _progress.RunProgress.Value++;
-	        _progress.ErrorsFoundLabel.Text = @"Errors Found:" + Report.GetErrorNumbers();
-	        var time = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
-	        string answer = $"{time.Hours:D2}h:{time.Minutes:D2}m:{time.Seconds:D2}s";
-	        _progress.ElapsedLabel.Text = $@"Time Elapsed:{answer}";
-	        _progress.FunctionsRunLabel.Text = $@"Functions Run:{xlFunc.FunctionCallCount.ToString()}";
-	        System.Windows.Forms.Application.DoEvents();
-        }
 
         private bool IsStopped()
         {
@@ -416,15 +401,15 @@ namespace SpreadCheck
 	        RunButton.Enabled = false;
         }
 
-        private void SetUpProgressBar(int enabledRuleListCount)
-        {
-	        //TODO Fix progress metre and make more obvious function complete
-	        _progress.Show();
-	        _progress.RunProgress.Visible = true;
-	        _progress.RunProgress.Minimum = 0;
-	        // Set progress by number of rows x columns with enabled rule lists
-	        _progress.RunProgress.Maximum = _foundLastRow  * enabledRuleListCount;
-        }
+        // private void SetUpProgressBar(int enabledRuleListCount)
+        // {
+	       //  //TODO Fix progress metre and make more obvious function complete
+	       //  _progress.Show();
+	       //  _progress.RunProgress.Visible = true;
+	       //  _progress.RunProgress.Minimum = 0;
+	       //  // Set progress by number of rows x columns with enabled rule lists
+	       //  _progress.RunProgress.Maximum = _foundLastRow  * enabledRuleListCount;
+        // }
 
         private void RemoveItemButton_Click_1(object sender, EventArgs e)
         {	try
